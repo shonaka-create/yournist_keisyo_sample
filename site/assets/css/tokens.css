@@ -1,0 +1,61 @@
+/* =====================================================================
+   Design Tokens (site copy of /design/tokens.css)
+   - Typography / spacing / rules : akariinc.co.jp
+   - Blue palette                 : kpmg.com/jp
+   ===================================================================== */
+
+:root {
+  /* ---------- Color : KPMG blue palette ---------- */
+  --color-primary:        #1e49e2;
+  --color-primary-deep:   #00338d;
+  --color-ink:            #0c233c;
+  --color-primary-tint:   #cddcfe;
+  --color-sky:            #76d2ff;
+  --color-sky-soft:       #aceaff;
+  --color-cyan:           #00b8f5;
+  --color-surface:        #f5f6fa;
+  --color-white:          #ffffff;
+
+  /* ---------- Typography ---------- */
+  --font-body:    "Inter", "Noto Sans JP", sans-serif;
+  --font-display: "Inter", "Noto Sans JP", sans-serif;
+
+  --fw-light:   300;
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semibold:600;
+  --fw-bold:    700;
+  --fw-black:   900;
+
+  --fs-caption: 12px;
+  --fs-sm:      14px;
+  --fs-base:    16px;
+  --fs-lg:      24px;
+  --fs-xl:      34px;
+
+  --lh-tight:  1.15;
+  --lh-snug:   1.8;
+  --tracking-caps: 2.45px;
+
+  /* ---------- Spacing ---------- */
+  --space-1:  8px;
+  --space-2:  10px;
+  --space-3:  16px;
+  --space-4:  20px;
+  --space-5:  24px;
+  --space-6:  35px;
+  --space-section-sm: 2rem;
+  --space-section-lg: 4rem;
+
+  /* ---------- Radius ---------- */
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius:      6px;
+  --radius-pill: 40px;
+  --radius-full: 50%;
+
+  /* ---------- Elevation ---------- */
+  --shadow-sm: 0 1px 3px rgba(12,35,60,.08);
+  --shadow:    0 4px 20px rgba(12,35,60,.10);
+  --shadow-lg: 0 12px 40px rgba(12,35,60,.14);
+}

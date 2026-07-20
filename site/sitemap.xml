@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://example.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://example.com/contact/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://example.com/request/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://example.com/news/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/business/wholesale/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://example.com/business/manufacturing/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://example.com/service/order/</loc><priority>0.7</priority></url>
+  <url><loc>https://example.com/service/delivery/</loc><priority>0.7</priority></url>
+  <url><loc>https://example.com/service/support/</loc><priority>0.7</priority></url>
+  <url><loc>https://example.com/column/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://example.com/column/attribution/</loc><priority>0.6</priority></url>
+  <url><loc>https://example.com/column/standardization/</loc><priority>0.6</priority></url>
+  <url><loc>https://example.com/column/succession/</loc><priority>0.6</priority></url>
+  <url><loc>https://example.com/column/gdp-basics/</loc><priority>0.6</priority></url>
+  <url><loc>https://example.com/column/supply-shortage/</loc><priority>0.6</priority></url>
+  <url><loc>https://example.com/column/recall-response/</loc><priority>0.6</priority></url>
+  <url><loc>https://example.com/column/pharmaceutical-bcp/</loc><priority>0.6</priority></url>
+  <url><loc>https://example.com/column/distribution-price/</loc><priority>0.6</priority></url>
+  <url><loc>https://example.com/column/drug-price-revision/</loc><priority>0.6</priority></url>
+  <url><loc>https://example.com/column/cold-chain/</loc><priority>0.6</priority></url>
+  <url><loc>https://example.com/column/cybersecurity/</loc><priority>0.6</priority></url>
+  <url><loc>https://example.com/column/logistics-2024/</loc><priority>0.6</priority></url>
+  <url><loc>https://example.com/column/inventory-accuracy/</loc><priority>0.6</priority></url>
+</urlset>

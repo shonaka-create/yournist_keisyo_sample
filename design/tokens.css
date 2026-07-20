@@ -1,0 +1,63 @@
+/* =====================================================================
+   Design Tokens
+   - Typography / spacing / rules : akariinc.co.jp (Nuxt, entry CSS)
+   - Blue palette                 : kpmg.com/jp (KPMG brand CSS variables)
+   Extracted 2026-07-20
+   ===================================================================== */
+
+:root {
+  /* ---------- Color : KPMG blue palette ---------- */
+  --color-primary:        #1e49e2; /* KPMG cobalt blue - links / buttons (most used) */
+  --color-primary-deep:   #00338d; /* KPMG classic deep blue - hover / headings      */
+  --color-ink:            #0c233c; /* near-black navy - body text / active           */
+  --color-primary-tint:   #cddcfe; /* pale blue - backgrounds / borders              */
+  --color-sky:            #76d2ff; /* light blue accent                              */
+  --color-sky-soft:       #aceaff; /* softer light blue                              */
+  --color-cyan:           #00b8f5; /* bright cyan accent                             */
+  --color-surface:        #f5f6fa; /* light gray-blue surface                        */
+  --color-white:          #ffffff;
+
+  /* ---------- Typography : Akari ---------- */
+  --font-body:    "Inter", "Noto Sans JP", sans-serif; /* body / UI            */
+  --font-display: "grandam", "Inter", sans-serif;      /* headings / display   */
+
+  --fw-light:   300;
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semibold:600;
+  --fw-bold:    700; /* dominant emphasis weight on Akari */
+  --fw-black:   900;
+
+  /* Type scale (px seen in source: 12 / 14 / 16 / 24 / 34 + 2em / 3em) */
+  --fs-caption: 12px;
+  --fs-sm:      14px;
+  --fs-base:    16px;
+  --fs-lg:      24px;
+  --fs-xl:      34px;
+  --fs-display: 3em;
+
+  --lh-tight:  1;    /* large headings */
+  --lh-snug:   1.4;  /* body copy      */
+  --tracking-caps: 2.45px; /* spaced uppercase labels */
+
+  /* ---------- Spacing (Akari rhythm) ---------- */
+  --space-1:  8px;   /* gap                       */
+  --space-2:  10px;  /* base vertical rhythm      */
+  --space-3:  16px;
+  --space-4:  20px;
+  --space-5:  24px;
+  --space-6:  35px;
+  --space-section-sm: 2rem;
+  --space-section-lg: 4rem;
+
+  /* ---------- Radius (Akari) ---------- */
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius:      6px;  /* primary radius */
+  --radius-pill: 40px;
+  --radius-full: 50%;
+
+  /* ---------- Elevation ---------- */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.1);
+  --shadow:    0 2px 8px rgba(0,0,0,.15);
+}
