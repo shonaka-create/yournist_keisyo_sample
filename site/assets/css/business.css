@@ -551,3 +551,427 @@ html{scroll-behavior:smooth;overflow-x:hidden}.business-page{--ink:#071b34;--blu
 @media(hover:none) and (max-width:620px){
   .b-intervention article:hover::before{background-size:100% auto}
 }
+
+/* Tourism LP guardrails
+   Scoped to this page so wholesale and manufacturing keep their current layout. */
+.business-page--tourism .b-header{
+  min-width:0;
+}
+.business-page--tourism .b-header .b-brand--logo{
+  flex-shrink:0!important;
+}
+.business-page--tourism .b-nav{
+  min-width:0;
+  flex-wrap:nowrap;
+}
+.business-page--tourism .b-hero{
+  grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+}
+.business-page--tourism .b-hero__copy,
+.business-page--tourism .b-hero__image{
+  min-width:0;
+}
+.business-page--tourism .b-hero h1{
+  max-width:720px;
+  overflow-wrap:normal;
+  word-break:keep-all;
+}
+.business-page--tourism .b-hero h1 .b-hero__line{
+  display:block;
+}
+.business-page--tourism .b-hero h1 .b-hero__line--white{
+  color:#fff;
+}
+.business-page--tourism .b-hero h1 br{
+  display:block;
+}
+.business-page--tourism .b-intervention article:nth-child(1)::before{
+  background-image:url("../img/tourism-article-agency-standardization.webp");
+}
+.business-page--tourism .b-intervention article:nth-child(2)::before{
+  background-image:url("../img/tourism-article-itinerary-change.webp");
+}
+.business-page--tourism .b-intervention article:nth-child(3)::before{
+  background-image:url("../img/tourism-article-hotel-reservation.webp");
+}
+.business-page--tourism .b-intervention article:nth-child(4)::before{
+  background-image:url("../img/tourism-article-multilingual.webp");
+}
+.business-page--tourism .b-footer__grid{
+  width:min(1200px,calc(100% - 80px));
+}
+
+@media(max-width:1100px){
+  .business-page--tourism .b-nav{
+    gap:14px;
+  }
+  .business-page--tourism .b-nav a:not(.b-nav-cta){
+    display:none;
+  }
+}
+@media(max-width:980px){
+  .business-page--tourism .b-hero{
+    grid-template-columns:minmax(0,1fr);
+  }
+  .business-page--tourism .b-hero__copy{
+    padding-inline:max(24px,calc((100vw - 720px)/2));
+  }
+}
+@media(max-width:620px){
+  .business-page--tourism .b-header{
+    overflow:visible;
+  }
+  .business-page--tourism .b-header .b-brand--logo{
+    width:132px!important;
+    min-width:132px!important;
+    max-width:132px!important;
+    height:44px!important;
+    flex-basis:132px!important;
+  }
+  .business-page--tourism .b-nav .b-nav-cta{
+    max-width:116px;
+    white-space:nowrap;
+  }
+  .business-page--tourism .b-hero__copy{
+    padding:72px 16px 60px;
+  }
+  .business-page--tourism .b-hero h1{
+    font-size:clamp(2.1rem,10vw,2.65rem);
+    line-height:1.28;
+    letter-spacing:-.045em;
+  }
+  .business-page--tourism .b-hero__image{
+    height:360px;
+  }
+  .business-page--tourism .b-footer__grid{
+    width:min(100% - 32px,1200px);
+  }
+  .business-page--tourism .b-footer__logo{
+    width:176px!important;
+    max-width:176px!important;
+    height:50px!important;
+  }
+}
+
+/* Wholesale LP guardrails
+   Keep the shared manufacturing layout untouched while making the wholesale
+   hero and brand areas stable at desktop, tablet and mobile widths. */
+.wholesale-business-page{
+  width:100%;
+  max-width:100%;
+  overflow-x:clip;
+}
+.wholesale-business-page .b-header{
+  width:100%;
+  max-width:100%;
+  overflow:hidden;
+  background:#06182e;
+  backdrop-filter:none;
+}
+.wholesale-business-page .b-header .b-brand--logo{
+  width:168px!important;
+  min-width:168px!important;
+  max-width:168px!important;
+  height:48px!important;
+  flex:0 0 168px!important;
+}
+.wholesale-business-page .b-header .b-brand--logo img,
+.wholesale-business-page .b-footer .b-footer__logo img{
+  width:100%!important;
+  max-width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+}
+.wholesale-business-page .b-nav{
+  min-width:0;
+  max-width:calc(100% - 190px);
+}
+.wholesale-business-page .b-nav a{
+  flex:0 0 auto;
+}
+.wholesale-business-page .b-hero{
+  width:100%;
+  max-width:100%;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+}
+.wholesale-business-page .b-hero__copy,
+.wholesale-business-page .b-hero__image{
+  min-width:0;
+}
+.wholesale-business-page .b-hero h1{
+  max-width:10.5em;
+  font-size:clamp(3rem,4.35vw,4.55rem);
+  line-height:1.25;
+  word-break:auto-phrase;
+  overflow-wrap:normal;
+  line-break:strict;
+  text-wrap:balance;
+}
+.wholesale-business-page .b-hero h1 span{
+  display:inline;
+}
+.wholesale-business-page .b-hero__lead{
+  max-width:38em;
+  word-break:auto-phrase;
+  overflow-wrap:normal;
+  line-break:strict;
+  text-wrap:pretty;
+}
+.wholesale-business-page .b-shell,
+.wholesale-business-page .b-section,
+.wholesale-business-page .b-breadcrumb-bar,
+.wholesale-business-page .b-cta,
+.wholesale-business-page .b-footer{
+  max-width:100%;
+}
+.wholesale-business-page .b-footer{
+  overflow:hidden;
+  background:#06182e;
+}
+.wholesale-business-page .b-footer__grid{
+  max-width:1200px;
+  align-items:center;
+}
+.wholesale-business-page .b-footer__logo{
+  width:182px!important;
+  max-width:182px!important;
+  height:50px!important;
+}
+
+@media(max-width:980px){
+  .wholesale-business-page .b-header .b-brand--logo{
+    width:158px!important;
+    min-width:158px!important;
+    max-width:158px!important;
+    height:46px!important;
+    flex-basis:158px!important;
+  }
+  .wholesale-business-page .b-nav{
+    max-width:calc(100% - 176px);
+  }
+  .wholesale-business-page .b-hero{
+    grid-template-columns:1fr;
+  }
+  .wholesale-business-page .b-hero__copy{
+    min-height:auto;
+    padding:88px 24px 76px;
+  }
+  .wholesale-business-page .b-hero h1{
+    max-width:11em;
+    font-size:clamp(3rem,8vw,4.4rem);
+  }
+  .wholesale-business-page .b-hero__image{
+    height:500px;
+  }
+}
+
+@media(max-width:620px){
+  .wholesale-business-page .b-header .b-brand--logo{
+    width:128px!important;
+    min-width:128px!important;
+    max-width:128px!important;
+    height:42px!important;
+    flex-basis:128px!important;
+  }
+  .wholesale-business-page .b-nav{
+    max-width:calc(100% - 136px);
+    gap:8px;
+  }
+  .wholesale-business-page .b-nav .b-nav-cta{
+    padding:10px 12px;
+    font-size:.72rem;
+  }
+  .wholesale-business-page .b-hero__copy{
+    padding:72px 16px 58px;
+  }
+  .wholesale-business-page .b-hero h1{
+    max-width:9.6em;
+    font-size:clamp(2.35rem,10.5vw,3rem);
+    line-height:1.28;
+  }
+  .wholesale-business-page .b-hero__lead{
+    font-size:.96rem;
+    line-height:1.85;
+  }
+  .wholesale-business-page .b-hero__image{
+    height:330px;
+  }
+  .wholesale-business-page .b-footer__grid{
+    align-items:flex-start;
+  }
+  .wholesale-business-page .b-footer__logo{
+    width:164px!important;
+    max-width:164px!important;
+    height:46px!important;
+  }
+}
+
+/* Manufacturing LP guardrails
+   Scoped to this page to prevent shared LP rules from stretching the wordmark,
+   collapsing hero text into one-character lines, or widening the viewport. */
+.manufacturing-business-page{
+  width:100%;
+  max-width:100%;
+  overflow-x:clip;
+}
+.manufacturing-business-page .b-header{
+  width:100%;
+  max-width:100%;
+  overflow:hidden;
+  background:#06182e;
+  border-bottom-color:rgba(255,255,255,.16);
+  box-shadow:0 8px 26px rgba(2,13,27,.18);
+  backdrop-filter:none;
+}
+.manufacturing-business-page .b-header .b-brand--logo{
+  width:168px!important;
+  min-width:168px!important;
+  max-width:168px!important;
+  height:48px!important;
+  flex:0 0 168px!important;
+}
+.manufacturing-business-page .b-header .b-brand--logo img,
+.manufacturing-business-page .b-footer .b-footer__logo img{
+  width:100%!important;
+  max-width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+}
+.manufacturing-business-page .b-nav{
+  min-width:0;
+  max-width:calc(100% - 190px);
+  flex-wrap:nowrap;
+}
+.manufacturing-business-page .b-nav a{
+  flex:0 0 auto;
+}
+.manufacturing-business-page .b-hero{
+  width:100%;
+  max-width:100%;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+}
+.manufacturing-business-page .b-hero__copy,
+.manufacturing-business-page .b-hero__image{
+  min-width:0;
+}
+.manufacturing-business-page .b-hero h1{
+  max-width:10.5em;
+  font-size:clamp(3rem,4.35vw,4.55rem);
+  line-height:1.25;
+  word-break:normal;
+  overflow-wrap:normal;
+  line-break:strict;
+  text-wrap:balance;
+}
+.manufacturing-business-page .b-hero h1 .b-hero__line{
+  display:block;
+  white-space:nowrap;
+}
+.manufacturing-business-page .b-hero h1 .b-hero__line--white{
+  color:#fff;
+}
+.manufacturing-business-page .b-hero__lead{
+  max-width:39em;
+  word-break:auto-phrase;
+  overflow-wrap:normal;
+  line-break:strict;
+  text-wrap:pretty;
+}
+.manufacturing-business-page .b-shell,
+.manufacturing-business-page .b-section,
+.manufacturing-business-page .b-breadcrumb-bar,
+.manufacturing-business-page .b-cta,
+.manufacturing-business-page .b-footer{
+  max-width:100%;
+}
+.manufacturing-business-page .b-footer{
+  overflow:hidden;
+  background:#06182e;
+}
+.manufacturing-business-page .b-footer__grid{
+  max-width:1200px;
+  align-items:center;
+}
+.manufacturing-business-page .b-footer__logo{
+  width:182px!important;
+  max-width:182px!important;
+  height:50px!important;
+}
+
+@media(max-width:1100px){
+  .manufacturing-business-page .b-nav{
+    gap:14px;
+  }
+  .manufacturing-business-page .b-nav a:not(.b-nav-cta){
+    display:none;
+  }
+}
+
+@media(max-width:980px){
+  .manufacturing-business-page .b-header .b-brand--logo{
+    width:158px!important;
+    min-width:158px!important;
+    max-width:158px!important;
+    height:46px!important;
+    flex-basis:158px!important;
+  }
+  .manufacturing-business-page .b-nav{
+    max-width:calc(100% - 176px);
+  }
+  .manufacturing-business-page .b-hero{
+    grid-template-columns:1fr;
+  }
+  .manufacturing-business-page .b-hero__copy{
+    min-height:auto;
+    padding:88px 24px 76px;
+  }
+  .manufacturing-business-page .b-hero h1{
+    max-width:11em;
+    font-size:clamp(3rem,8vw,4.35rem);
+  }
+  .manufacturing-business-page .b-hero__image{
+    height:500px;
+  }
+}
+
+@media(max-width:620px){
+  .manufacturing-business-page .b-header .b-brand--logo{
+    width:128px!important;
+    min-width:128px!important;
+    max-width:128px!important;
+    height:42px!important;
+    flex-basis:128px!important;
+  }
+  .manufacturing-business-page .b-nav{
+    max-width:calc(100% - 136px);
+    gap:8px;
+  }
+  .manufacturing-business-page .b-nav .b-nav-cta{
+    padding:10px 12px;
+    font-size:.72rem;
+  }
+  .manufacturing-business-page .b-hero__copy{
+    padding:72px 16px 58px;
+  }
+  .manufacturing-business-page .b-hero h1{
+    max-width:none;
+    font-size:clamp(2.2rem,9.7vw,2.75rem);
+    line-height:1.3;
+    letter-spacing:-.045em;
+  }
+  .manufacturing-business-page .b-hero__lead{
+    font-size:.96rem;
+    line-height:1.85;
+  }
+  .manufacturing-business-page .b-hero__image{
+    height:330px;
+  }
+  .manufacturing-business-page .b-footer__grid{
+    align-items:flex-start;
+  }
+  .manufacturing-business-page .b-footer__logo{
+    width:164px!important;
+    max-width:164px!important;
+    height:46px!important;
+  }
+}
