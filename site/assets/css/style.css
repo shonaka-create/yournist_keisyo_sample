@@ -400,7 +400,7 @@ h3 { font-size: 1.125rem; font-weight: var(--fw-bold); }
    2026 editorial refresh for service, contact and knowledge pages
    ===================================================================== */
 body:not(.home-refresh) { background: #fff; }
-body:not(.home-refresh) .site-header { background: rgba(255,255,255,.92); border-bottom-color: rgba(12,35,60,.1); backdrop-filter: blur(18px); }
+body:not(.home-refresh) .site-header { color:#fff; background: rgba(7,27,52,.98); border-bottom-color: rgba(255,255,255,.14); backdrop-filter: blur(18px); }
 body:not(.home-refresh) .site-header .container { min-height: 84px; }
 body:not(.home-refresh) .brand__name { letter-spacing: -.02em; }
 body:not(.home-refresh) .brand__by { color: #2854f3; }
@@ -451,8 +451,57 @@ body:not(.home-refresh) .source-note { background: #f2f0e9; border: 0; border-ra
 body:not(.home-refresh) .article-cta { padding: 32px; background: #071b34; color: #fff; border: 0; }
 body:not(.home-refresh) .site-footer { padding-top: 76px; background: #041326; }
 
+/* Hover states may change surface styling, never text/card position. */
+.btn--primary,.btn--ghost,.btn--white,.risk,.card,.column-card,.card a.card__link{
+  transition:background-color .2s ease,border-color .2s ease,color .2s ease,box-shadow .2s ease;
+}
+.btn--primary:hover,.btn--ghost:hover,.btn--white:hover,
+.risk:hover,.card:hover,.column-card:hover,.card a.card__link:hover,
+body:not(.home-refresh) .column-card:hover{
+  transform:none;
+}
+.risk:hover,.card:hover{background:#f5f8fd;box-shadow:0 14px 38px rgba(0,51,141,.1)}
+body:not(.home-refresh) .column-card:hover{background:#e7eef8;box-shadow:0 14px 38px rgba(7,27,52,.09)}
+.site-nav a.nav-link::after{display:none}
+.site-nav a.nav-link:hover{background:rgba(30,73,226,.08)}
+.btn:focus-visible,.card:focus-visible,.column-card:focus-visible,.site-nav a:focus-visible,.site-footer a:focus-visible{
+  outline:3px solid var(--color-primary-tint);
+  outline-offset:3px;
+}
+
+/* Lower-page header/footer and corporate-news cards */
+body:not(.home-refresh) .site-header .brand,
+body:not(.home-refresh) .site-header .site-nav a.nav-link { color:#fff; }
+body:not(.home-refresh) .site-header .brand img,
+body:not(.home-refresh) .site-header .legacy-brand-logo { display:block; width:190px!important; max-width:190px!important; height:54px!important; object-fit:contain!important; }
+body:not(.home-refresh) .site-footer { color:rgba(255,255,255,.72); }
+body:not(.home-refresh) .site-footer .legacy-brand-logo,
+body:not(.home-refresh) .site-footer .footer-brand-logo { display:block; width:220px!important; max-width:220px!important; height:60px!important; object-fit:contain!important; }
+body:not(.home-refresh) .site-footer .container { align-items:start; }
+body:not(.home-refresh) .site-footer .foot-links a { color:rgba(255,255,255,.82); white-space:nowrap; }
+body:not(.home-refresh) .site-footer p { line-height:1.8; }
+.news-card { display:flex!important; min-width:0; min-height:0!important; flex-direction:column; overflow:hidden; padding:0!important; background:#fff!important; border:1px solid rgba(7,27,52,.12)!important; }
+.news-card__media { width:100%; aspect-ratio:16/10; overflow:hidden; background:#dfe7ef; }
+.news-card__media img { width:100%; height:100%; object-fit:cover; transition:transform .45s ease; }
+.news-card__media--dual { display:grid; grid-template-columns:1fr 1fr; }
+.news-card__media--dual img { min-width:0; }
+.news-card:hover .news-card__media img { transform:scale(1.035); }
+.news-card__body { display:flex; min-height:320px; flex:1; flex-direction:column; padding:28px; }
+.news-card .card__tag { margin-bottom:0!important; color:#1749ba!important; background:#eef3fa!important; }
+.news-card h2 { margin:22px 0 14px!important; font-size:clamp(1.12rem,1.8vw,1.35rem)!important; line-height:1.55!important; }
+.news-card p { color:rgba(7,27,52,.72)!important; }
+.news-card .article-meta { margin-top:auto; padding-top:28px; color:rgba(7,27,52,.5)!important; font-size:.78rem; }
+
 @media (max-width: 820px) {
   body:not(.home-refresh) .site-header .container { min-height: 70px; }
   body:not(.home-refresh) .page-hero h1,
   body:not(.home-refresh) .article-header h1 { font-size: 2.5rem; }
+  body:not(.home-refresh) .site-nav { background:#071b34; border-bottom-color:rgba(255,255,255,.14); }
+  body:not(.home-refresh) .site-nav a.nav-link { border-bottom-color:rgba(255,255,255,.12); }
+  body:not(.home-refresh) .nav-toggle span { background:#fff; }
+  body:not(.home-refresh) .site-header .brand img,
+  body:not(.home-refresh) .site-header .legacy-brand-logo { width:145px!important; max-width:145px!important; height:46px!important; }
+  body:not(.home-refresh) .site-footer .container { grid-template-columns:1fr; }
+  body:not(.home-refresh) .site-footer .foot-links { justify-content:flex-start; }
+  .news-card__body { min-height:0; padding:24px; }
 }

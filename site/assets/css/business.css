@@ -29,3 +29,525 @@ html{scroll-behavior:smooth;overflow-x:hidden}.business-page{--ink:#071b34;--blu
 @media(max-width:620px){.b-cta__buttons{flex-direction:column}}
 .b-brand--logo{width:185px;height:54px;overflow:hidden}.b-brand--logo img{width:100%;height:100%;object-fit:contain}.b-footer__logo{display:block;width:220px;height:60px;overflow:hidden}.b-footer__logo img{width:100%;height:100%;object-fit:contain}.b-footer__grid>div{max-width:600px}.b-footer__grid>div>p{margin-top:14px;font-size:.88rem;line-height:1.8}.b-hero__actions .b-btn--ghost{background:rgba(7,27,52,.25)}
 @media(max-width:620px){.b-brand--logo{width:142px;height:47px}.b-footer__logo{width:190px;height:54px}}
+
+/* LP layout guardrails: isolate the wordmark and content cards from legacy
+   grid rules and broad shared image declarations. */
+.business-page .b-header{display:flex;align-items:center;overflow:hidden}
+.business-page .b-header .b-brand--logo{display:block!important;width:185px!important;min-width:185px!important;max-width:185px!important;height:54px!important;flex:0 0 185px!important;overflow:hidden!important}
+.business-page .b-header .b-brand--logo img,
+.business-page .b-footer .b-footer__logo img{display:block!important;width:100%!important;max-width:100%!important;height:100%!important;object-fit:contain!important}
+.business-page .b-symptoms article{display:block!important;min-width:0}
+.business-page .b-symptoms article>div{width:100%;min-width:0}
+.business-page .b-symptoms h3,
+.business-page .b-symptoms p{max-width:100%;overflow-wrap:normal;word-break:normal}
+.business-page .b-footer__grid{align-items:flex-start;gap:48px}
+.business-page .b-footer__logo{display:block!important;width:220px!important;max-width:220px!important;height:60px!important;overflow:hidden!important}
+.business-page .b-footer__grid>a{flex:0 0 auto;white-space:nowrap}
+@media(max-width:620px){
+  .business-page .b-header .b-brand--logo{width:142px!important;min-width:142px!important;max-width:142px!important;height:47px!important;flex-basis:142px!important}
+  .business-page .b-footer__logo{width:190px!important;max-width:190px!important;height:54px!important}
+  .business-page .b-footer__grid>a{white-space:normal}
+}
+.b-breadcrumb-bar{padding:14px 0;background:#fff;border-bottom:1px solid rgba(7,27,52,.12)}
+.b-breadcrumb-bar ol{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none;color:rgba(7,27,52,.58);font-size:.78rem}
+.b-breadcrumb-bar li+li::before{margin-right:8px;content:"/";color:#1e49e2}
+.b-breadcrumb-bar a{color:#1749ba}
+
+/* Layout guardrails: keep the transparent wordmark from using its intrinsic width. */
+.b-brand--logo{
+  display:block;
+  flex:0 0 185px;
+  min-width:185px;
+  width:185px;
+  height:54px;
+  overflow:hidden;
+}
+.b-brand--logo img,
+.b-footer__logo img{
+  display:block;
+  width:100%;
+  height:100%;
+  max-width:100%;
+  object-fit:contain;
+}
+.b-nav{min-width:0}
+.b-nav a,.b-footer__grid>a{white-space:nowrap}
+.b-footer__grid>div{min-width:0}
+.b-footer__logo{flex:none}
+
+/* Prevent narrow anonymous grid tracks and unnatural one-character wrapping. */
+.business-page h1,
+.business-page h2,
+.business-page h3,
+.business-page h4,
+.business-page p,
+.business-page li,
+.business-page a{
+  word-break:normal;
+  overflow-wrap:break-word;
+}
+.b-symptoms article{
+  display:block !important;
+  min-width:0;
+}
+.b-symptoms article>div,
+.b-intervention article,
+.b-change>div,
+.b-outcome-grid article,
+.b-sectors article,
+.b-flow article{
+  min-width:0;
+  width:100%;
+}
+
+@media(max-width:620px){
+  .b-brand--logo{
+    flex-basis:142px;
+    min-width:142px;
+    width:142px;
+    height:47px;
+  }
+  .b-footer__grid>a{white-space:normal}
+}
+
+/* 2026-07 LP accessibility and section polish
+   Keep this block last so it remains isolated from the shared layout work above. */
+.business-page{
+  width:100%;
+  max-width:100%;
+  overflow-x:clip;
+}
+
+/* Section introductions follow one clear vertical reading order. */
+.b-heading{
+  display:block;
+  width:100%;
+  max-width:960px;
+  margin-bottom:52px;
+}
+.b-heading>div,
+.b-heading>p{
+  width:100%;
+  max-width:780px;
+}
+.b-heading>p{
+  margin-top:24px;
+  color:#3d4e62;
+  font-size:1rem;
+  line-height:1.95;
+}
+.b-section--ink .b-heading>p{
+  color:#d3deea;
+}
+
+/* Before/after comparison: preserve hierarchy without sacrificing readability. */
+.b-change{
+  min-width:0;
+  background:#102741;
+  border-color:rgba(225,236,247,.28);
+}
+.b-change>div:first-child{
+  color:#e2eaf2;
+  background:#0b2038;
+}
+.b-change>div:first-child small{
+  color:#b9c8d7;
+}
+.b-change>div:first-child h3{
+  color:#f7f9fc;
+}
+.b-change p,
+.b-change>div:first-child p,
+.b-change>div:last-child p{
+  color:#d3deea;
+  opacity:1;
+}
+.b-change>div:last-child small{
+  color:#f7f9fc;
+}
+.b-change>div:last-child h3{
+  color:#83ddff;
+}
+
+/* Remove the unexplained lime fill; use a quiet, consistent featured state. */
+.b-sectors article,
+.b-sectors article:first-child{
+  color:#071b34;
+  background:#fff;
+  border:1px solid rgba(7,27,52,.16);
+  border-top:4px solid #1e49e2;
+}
+.b-sectors article:first-child{
+  background:#f4f7fc;
+  box-shadow:inset 0 0 0 1px rgba(30,73,226,.06);
+}
+.b-sectors p{
+  color:#4b5b6e;
+  opacity:1;
+}
+
+/* Large blue panels are replaced with calmer corporate surfaces. */
+.b-outcome-main{
+  background:#0b223d;
+}
+.b-outcome-main p{
+  color:#dbe5ef;
+}
+.b-cta{
+  color:#071b34;
+  background:#eef3f8;
+  border-top:1px solid rgba(7,27,52,.12);
+}
+.b-cta .b-kicker{
+  color:#1e49e2;
+}
+.b-cta p{
+  max-width:760px;
+  color:#405267;
+}
+.b-cta .b-btn{
+  background:#071b34;
+  color:#fff;
+}
+.b-cta .b-btn--ghost{
+  background:#fff;
+  color:#071b34;
+  border:1px solid rgba(7,27,52,.28);
+}
+.b-cta .b-btn:hover,
+.b-cta .b-btn:focus-visible{
+  background:#153a62;
+}
+.b-cta .b-btn--ghost:hover,
+.b-cta .b-btn--ghost:focus-visible{
+  background:#e2eaf3;
+  color:#071b34;
+}
+
+/* FAQ: compact rhythm, clear affordance and accessible interaction states. */
+.b-heading:has(+ .b-faq){
+  margin-bottom:30px;
+}
+.b-faq{
+  width:100%;
+  max-width:940px;
+  margin:0;
+  border:0;
+}
+.b-faq details{
+  overflow:hidden;
+  margin-top:10px;
+  background:#fff;
+  border:1px solid rgba(7,27,52,.15);
+}
+.b-faq details:first-child{
+  margin-top:0;
+}
+.b-faq summary{
+  position:relative;
+  display:flex;
+  min-height:72px;
+  align-items:center;
+  padding:20px 72px 20px 24px;
+  color:#071b34;
+  font-size:1rem;
+  font-weight:700;
+  line-height:1.65;
+  list-style:none;
+  cursor:pointer;
+  transition:background-color .2s ease,color .2s ease;
+}
+.b-faq summary::-webkit-details-marker{
+  display:none;
+}
+.b-faq summary::marker{
+  content:"";
+}
+.b-faq summary::after{
+  position:absolute;
+  top:50%;
+  right:24px;
+  display:grid;
+  width:34px;
+  height:34px;
+  place-items:center;
+  content:"＋";
+  color:#fff;
+  background:#071b34;
+  border-radius:50%;
+  font-size:1.05rem;
+  font-weight:500;
+  line-height:1;
+  transform:translateY(-50%);
+  transition:transform .2s ease,background-color .2s ease;
+}
+.b-faq summary:hover{
+  background:#f4f7fc;
+}
+.b-faq summary:focus-visible{
+  outline:3px solid rgba(30,73,226,.45);
+  outline-offset:-3px;
+}
+.b-faq details[open] summary{
+  color:#00338d;
+  background:#f4f7fc;
+}
+.b-faq details[open] summary::after{
+  content:"－";
+  background:#1e49e2;
+  transform:translateY(-50%);
+}
+.b-faq details p{
+  margin:0;
+  padding:20px 72px 24px 24px;
+  color:#3f5064;
+  background:#fff;
+  border-top:1px solid rgba(7,27,52,.1);
+  font-size:.94rem;
+  line-height:1.9;
+  opacity:1;
+}
+
+/* Make every multi-column component shrink safely instead of widening the page. */
+.b-change-list,
+.b-change,
+.b-intervention,
+.b-outcomes,
+.b-outcome-grid,
+.b-sectors,
+.b-flow,
+.b-cta__buttons{
+  min-width:0;
+  max-width:100%;
+}
+.b-hero__actions,
+.b-cta__buttons{
+  flex-wrap:wrap;
+}
+
+@media(max-width:620px){
+  .b-heading{
+    margin-bottom:34px;
+  }
+  .b-heading>p{
+    margin-top:18px;
+    font-size:.96rem;
+    line-height:1.85;
+  }
+  .b-change>div{
+    padding:26px 22px;
+  }
+  .b-change>span{
+    margin-left:22px;
+  }
+  .b-sectors article{
+    padding:26px 22px;
+  }
+  .b-faq summary{
+    min-height:66px;
+    padding:18px 62px 18px 20px;
+    font-size:.96rem;
+  }
+  .b-faq summary::after{
+    right:18px;
+    width:32px;
+    height:32px;
+  }
+  .b-faq details p{
+    padding:18px 20px 22px;
+    font-size:.9rem;
+  }
+  .b-cta__buttons .b-btn{
+    width:100%;
+  }
+}
+
+/* Visual support for the four interventions without moving their copy. */
+.b-intervention article{
+  overflow:hidden;
+  transition:background-color .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.b-intervention article::before{
+  display:block;
+  height:138px;
+  margin:-36px -36px 28px;
+  content:"";
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:100% auto;
+  transition:background-size .45s cubic-bezier(.2,.7,.2,1);
+}
+.business-page:has(.b-hero__image img[src*="hero-wholesale"]) .b-intervention article:nth-child(1)::before{background-image:url("../img/hero-wholesale.webp")}
+.business-page:has(.b-hero__image img[src*="hero-wholesale"]) .b-intervention article:nth-child(2)::before{background-image:url("../img/process-workshop.webp")}
+.business-page:has(.b-hero__image img[src*="hero-wholesale"]) .b-intervention article:nth-child(3)::before{background-image:url("../img/hero-handover.webp")}
+.business-page:has(.b-hero__image img[src*="hero-wholesale"]) .b-intervention article:nth-child(4)::before{background-image:url("../img/hero-wholesale.webp")}
+.business-page:has(.b-hero__image img[src*="manufacturing"]) .b-intervention article:nth-child(1)::before{background-image:url("../img/manufacturing.webp")}
+.business-page:has(.b-hero__image img[src*="manufacturing"]) .b-intervention article:nth-child(2)::before{background-image:url("../img/process-workshop.webp")}
+.business-page:has(.b-hero__image img[src*="manufacturing"]) .b-intervention article:nth-child(3)::before{background-image:url("../img/hero-handover.webp")}
+.business-page:has(.b-hero__image img[src*="manufacturing"]) .b-intervention article:nth-child(4)::before{background-image:url("../img/manufacturing.webp")}
+.b-intervention article:hover{
+  background:#f7f9fc;
+  border-color:rgba(30,73,226,.26);
+  box-shadow:0 14px 38px rgba(7,27,52,.09);
+}
+.b-intervention article:hover::before{background-size:104% auto}
+
+/* Outcome photography with a high-contrast navy overlay. */
+.business-page:has(.b-hero__image img[src*="hero-wholesale"]) .b-outcome-main{
+  background:linear-gradient(90deg,rgba(5,24,44,.94),rgba(5,24,44,.78)),url("../img/hero-wholesale.webp") center/cover no-repeat;
+}
+.business-page:has(.b-hero__image img[src*="manufacturing"]) .b-outcome-main{
+  background:linear-gradient(90deg,rgba(5,24,44,.94),rgba(5,24,44,.78)),url("../img/manufacturing.webp") center/cover no-repeat;
+}
+
+/* Buttons and interactive rows keep their geometry on hover/focus. */
+.b-btn{
+  transition:background-color .2s ease,border-color .2s ease,color .2s ease,box-shadow .2s ease;
+}
+.b-btn:hover,.b-btn:focus-visible{transform:none}
+.b-btn:focus-visible,.b-faq summary:focus-visible,.b-nav a:focus-visible,.b-footer a:focus-visible{
+  outline:3px solid #76d2ff;
+  outline-offset:3px;
+}
+.b-hero__image{overflow:hidden}
+.b-hero__image img{transform-origin:center}
+
+@media(max-width:620px){
+  .b-intervention article::before{
+    height:126px;
+    margin:-30px -24px 24px;
+  }
+}
+@media(hover:none){
+  .b-intervention article:hover::before{background-size:100% auto}
+}
+
+/* Intervention narrative: numbered editorial steps instead of equal table cells. */
+.b-intervention{
+  position:relative;
+  display:grid;
+  max-width:1040px;
+  grid-template-columns:1fr;
+  gap:22px;
+  margin-inline:auto;
+  border:0;
+  counter-reset:intervention-step;
+}
+.b-intervention article{
+  position:relative;
+  display:grid;
+  min-height:270px;
+  grid-template-columns:280px minmax(0,1fr);
+  grid-template-rows:auto auto auto 1fr;
+  column-gap:38px;
+  align-content:center;
+  padding:34px 40px 34px 0;
+  background:#f5f8fc;
+  border:0;
+  border-radius:4px;
+  box-shadow:0 10px 32px rgba(7,27,52,.07);
+  counter-increment:intervention-step;
+}
+.b-intervention article::before{
+  width:280px;
+  height:100%;
+  min-height:270px;
+  grid-column:1;
+  grid-row:1/5;
+  margin:0;
+  background-size:auto 100%;
+}
+.b-intervention article::after{
+  position:absolute;
+  top:18px;
+  left:18px;
+  display:grid;
+  width:42px;
+  height:42px;
+  place-items:center;
+  content:"0" counter(intervention-step);
+  color:#fff;
+  background:#071b34;
+  border:1px solid rgba(255,255,255,.5);
+  border-radius:50%;
+  font-family:"DM Sans",sans-serif;
+  font-size:.72rem;
+  font-weight:700;
+}
+.b-intervention article>span,
+.b-intervention article>h3,
+.b-intervention article>p,
+.b-intervention article>ul{
+  grid-column:2;
+}
+.b-intervention article>span{color:#1e49e2}
+.b-intervention h3{margin-top:12px;font-size:1.4rem;line-height:1.5}
+.b-intervention p{margin-top:14px}
+.b-intervention ul{margin-top:18px}
+.b-intervention article:hover::before{background-size:auto 104%}
+
+/* Outcome narrative: one photographic promise followed by four concise benefits. */
+.b-outcomes{
+  display:block;
+  max-width:1120px;
+  margin-inline:auto;
+}
+.b-outcome-main{
+  min-height:460px;
+  max-width:none;
+  padding:clamp(42px,6vw,76px);
+  border-radius:4px;
+}
+.b-outcome-main h3{max-width:760px}
+.b-outcome-main p{max-width:720px}
+.b-outcome-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  margin-top:14px;
+}
+.b-outcome-grid article{
+  min-height:190px;
+  padding:28px 26px;
+  background:#fff;
+  border:0;
+  border-radius:4px;
+  box-shadow:0 8px 28px rgba(7,27,52,.07);
+}
+.b-outcome-grid h4{
+  margin-top:0;
+  color:#071b34;
+  font-size:1.08rem;
+  line-height:1.55;
+}
+.b-outcome-grid p{color:#4a5b6e;opacity:1}
+
+@media(max-width:900px){
+  .b-outcome-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:620px){
+  .b-intervention article{
+    display:block;
+    min-height:0;
+    padding:0 22px 28px;
+  }
+  .b-intervention article::before{
+    width:auto;
+    height:180px;
+    min-height:0;
+    margin:0 -22px 24px;
+    background-size:100% auto;
+  }
+  .b-intervention article::after{top:14px;left:14px}
+  .b-intervention article:hover::before{background-size:104% auto}
+  .b-intervention h3{font-size:1.25rem}
+  .b-outcome-main{min-height:400px;padding:38px 26px}
+  .b-outcome-grid{grid-template-columns:1fr}
+  .b-outcome-grid article{min-height:0}
+}
+@media(hover:none){
+  .b-intervention article:hover::before{background-size:auto 100%}
+}
+@media(hover:none) and (max-width:620px){
+  .b-intervention article:hover::before{background-size:100% auto}
+}

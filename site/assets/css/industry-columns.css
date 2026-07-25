@@ -14,9 +14,104 @@
 
 /* Filterable industry libraries and YOURNIST identity */
 .ic-brand--logo{width:185px;height:54px;overflow:hidden}.ic-brand--logo img{width:100%;height:100%;object-fit:contain}.ic-filters{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:-18px 0 34px}.ic-filters button{padding:10px 15px;color:var(--ink);background:#fff;border:1px solid var(--line);font:inherit;font-size:.78rem;font-weight:700;cursor:pointer;transition:.2s}.ic-filters button:hover,.ic-filters button[aria-pressed="true"]{color:#fff;background:var(--blue);border-color:var(--blue)}.ic-filters [data-result-count]{margin-left:auto;color:rgba(7,27,52,.58);font-size:.76rem}.ic-article[hidden]{display:none}.ic-footer__logo{width:250px}.ic-footer__logo img{width:220px;height:60px;object-fit:contain}.ic-footer__logo p{max-width:520px}
-.ic-article .ic-article__visual{position:relative;display:block!important;width:auto!important;height:176px;flex:0 0 176px;align-self:stretch!important;overflow:hidden;margin:-30px -30px 24px!important;padding:0!important;background:transparent;border:0!important}
-.ic-article__visual img{position:absolute;width:300%;height:200%;max-width:none;object-fit:fill}
-.ic-article__visual--p1 img{top:0;left:0}.ic-article__visual--p2 img{top:0;left:-100%}.ic-article__visual--p3 img{top:0;left:-200%}.ic-article__visual--p4 img{top:-100%;left:0}.ic-article__visual--p5 img{top:-100%;left:-100%}
+.ic-article .ic-article__visual{position:relative;display:block!important;width:auto!important;height:210px;flex:0 0 210px;align-self:stretch!important;overflow:hidden;margin:-30px -30px 24px!important;padding:0!important;background:#dfe7ef;border:0!important}
+.ic-article__visual img{position:absolute;width:300%;height:auto;max-width:none;object-fit:unset}
+.ic-article__visual--p1 img{top:0;left:0}.ic-article__visual--p2 img{top:0;left:-100%}.ic-article__visual--p3 img{top:0;left:-200%}.ic-article__visual--p4 img{right:auto;bottom:0;left:0}.ic-article__visual--p5 img{right:auto;bottom:0;left:-100%}
 .ic-article__visual+span+h2{margin-top:26px}
-@media(max-width:620px){.ic-article__visual{height:164px;margin:-26px -24px 22px!important}}
+@media(max-width:620px){.ic-article__visual{height:190px;flex-basis:190px!important;margin:-26px -24px 22px!important}}
 @media(max-width:620px){.ic-brand--logo{width:142px;height:47px}.ic-filters{margin-top:-8px}.ic-filters [data-result-count]{width:100%;margin:6px 0 0}.ic-footer__logo{width:100%}}
+
+/* Stable logo and readable wrapping across article library pages. */
+.ic-brand--logo{display:block;flex:0 0 185px;min-width:185px;width:185px;height:54px;overflow:hidden}
+.ic-brand--logo img{display:block;width:100%;height:100%;object-fit:contain}
+.ic-nav{min-width:0}.ic-nav a,.ic-footer__grid>a{white-space:nowrap}
+.ic-footer__grid>div{min-width:0}.ic-footer__logo{display:block;min-width:0}
+.ic-footer__logo img{display:block;max-width:100%}
+h1,h2,h3,h4,p,li,a{word-break:normal;overflow-wrap:break-word}
+.ic-article,.ic-article h2,.ic-article p,.ic-sector__body{min-width:0}
+@media(max-width:620px){.ic-brand--logo{flex-basis:142px;min-width:142px;width:142px;height:47px}.ic-footer__grid>a{white-space:normal}}
+
+/* Fixed-position hover feedback and clipped photo zoom. */
+.ic-sector{
+  transition:background-color .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.ic-sector:hover{
+  transform:none;
+  background:#eef3fa;
+  border-color:rgba(30,73,226,.28);
+  box-shadow:0 16px 44px rgba(7,27,52,.1);
+}
+.ic-sector__media{
+  display:block;
+  width:100%;
+  height:270px;
+  overflow:hidden;
+}
+.ic-sector__media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:none;
+  transform-origin:center;
+  transition:transform .45s cubic-bezier(.2,.7,.2,1);
+}
+.ic-sector:hover .ic-sector__media img{transform:scale(1.035)}
+.ic-article{transition:background-color .2s ease,border-color .2s ease,color .2s ease,box-shadow .2s ease}
+.ic-article:hover{transform:none;box-shadow:inset 0 0 0 1px rgba(118,210,255,.3)}
+.ic-article__visual img{
+  transform:none;
+  transition:transform .45s cubic-bezier(.2,.7,.2,1);
+}
+.ic-article__visual--p1 img{transform-origin:16.666% 25%}
+.ic-article__visual--p2 img{transform-origin:50% 25%}
+.ic-article__visual--p3 img{transform-origin:83.333% 25%}
+.ic-article__visual--p4 img{transform-origin:16.666% 75%}
+.ic-article__visual--p5 img{transform-origin:50% 75%}
+.ic-article:hover .ic-article__visual img{transform:scale(1.025)}
+.ic-sector:focus-visible,.ic-article:focus-visible,.ic-filters button:focus-visible,.ic-nav a:focus-visible,.ic-footer a:focus-visible{
+  outline:3px solid #76d2ff;
+  outline-offset:3px;
+}
+@media(max-width:620px){.ic-sector__media{height:220px}}
+@media(hover:none){
+  .ic-sector:hover .ic-sector__media img,
+  .ic-article:hover .ic-article__visual img{transform:none}
+}
+
+/* Tourism cards use individually cropped photographs, not a shared sprite sheet. */
+.tourism-columns .ic-article-grid{
+  gap:14px;
+  background:transparent;
+  border:0;
+}
+.tourism-columns .ic-article{
+  border:1px solid var(--line);
+}
+.tourism-columns .ic-article__visual img{
+  position:static;
+  width:100%;
+  height:100%;
+  max-width:100%;
+  object-fit:cover;
+  transform:none;
+}
+.tourism-columns .ic-article:hover .ic-article__visual img{
+  transform:scale(1.025);
+}
+@media(hover:none){
+  .tourism-columns .ic-article:hover .ic-article__visual img{
+    transform:none;
+  }
+}
+.ic-breadcrumb-bar{padding:14px 0;background:#fff;border-bottom:1px solid var(--line)}
+.ic-breadcrumb-bar ol{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none;color:rgba(7,27,52,.58);font-size:.78rem}
+.ic-breadcrumb-bar li+li::before{margin-right:8px;content:"/";color:var(--blue)}
+.ic-breadcrumb-bar a{color:var(--blue)}
+
+/* Three-sector hub: Wholesale, manufacturing and tourism. */
+@media(min-width:901px){
+  .ic-sector-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ic-sector{min-height:600px;grid-template-rows:240px 1fr}
+  .ic-sector__media{height:240px}
+  .ic-sector__body{padding:28px}
+}

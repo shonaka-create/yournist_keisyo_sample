@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://yournist-keisyo-sample.vercel.app/</loc></url>
   <url><loc>https://yournist-keisyo-sample.vercel.app/business/manufacturing/</loc></url>
+  <url><loc>https://yournist-keisyo-sample.vercel.app/business/tourism/</loc></url>
   <url><loc>https://yournist-keisyo-sample.vercel.app/business/wholesale/</loc></url>
   <url><loc>https://yournist-keisyo-sample.vercel.app/column/</loc></url>
   <url><loc>https://yournist-keisyo-sample.vercel.app/column/attribution/</loc></url>
@@ -28,6 +29,17 @@
   <url><loc>https://yournist-keisyo-sample.vercel.app/column/standardization/</loc></url>
   <url><loc>https://yournist-keisyo-sample.vercel.app/column/succession/</loc></url>
   <url><loc>https://yournist-keisyo-sample.vercel.app/column/supply-shortage/</loc></url>
+  <url><loc>https://yournist-keisyo-sample.vercel.app/column/tourism/</loc></url>
+  <url><loc>https://yournist-keisyo-sample.vercel.app/column/tourism/hotel-housekeeping-handover/</loc></url>
+  <url><loc>https://yournist-keisyo-sample.vercel.app/column/tourism/hotel-pms-data-handover/</loc></url>
+  <url><loc>https://yournist-keisyo-sample.vercel.app/column/tourism/hotel-reservation-standardization/</loc></url>
+  <url><loc>https://yournist-keisyo-sample.vercel.app/column/tourism/hotel-revenue-management/</loc></url>
+  <url><loc>https://yournist-keisyo-sample.vercel.app/column/tourism/inbound-itinerary-change/</loc></url>
+  <url><loc>https://yournist-keisyo-sample.vercel.app/column/tourism/inbound-night-emergency/</loc></url>
+  <url><loc>https://yournist-keisyo-sample.vercel.app/column/tourism/multilingual-customer-service/</loc></url>
+  <url><loc>https://yournist-keisyo-sample.vercel.app/column/tourism/tourism-business-succession/</loc></url>
+  <url><loc>https://yournist-keisyo-sample.vercel.app/column/tourism/travel-agency-costing/</loc></url>
+  <url><loc>https://yournist-keisyo-sample.vercel.app/column/tourism/travel-agency-standardization/</loc></url>
   <url><loc>https://yournist-keisyo-sample.vercel.app/column/wholesale/</loc></url>
   <url><loc>https://yournist-keisyo-sample.vercel.app/contact/</loc></url>
   <url><loc>https://yournist-keisyo-sample.vercel.app/news/</loc></url>
