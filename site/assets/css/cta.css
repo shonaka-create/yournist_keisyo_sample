@@ -1,0 +1,150 @@
+/* 全ページ共通のCTA要素：ヘッダーの「無料診断」ボタンと、フローティングバナー */
+
+/* --- ヘッダー内の無料診断（各レイアウトのCTAに並ぶ枠線ボタン） --- */
+.y-nav-diag{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  white-space:nowrap;
+  color:#fff!important;
+  border:1px solid rgba(255,255,255,.6);
+  font-weight:700;
+  transition:background-color .2s ease,color .2s ease,border-color .2s ease;
+}
+.y-nav-diag:hover{background:#fff;color:#071b34!important;border-color:#fff}
+.y-nav-diag[aria-current="page"]{background:rgba(255,255,255,.16);border-color:#fff}
+
+/* レイアウトごとに、隣のCTAと同じ高さ・字送りへ合わせる */
+.b-nav .y-nav-diag{padding:13px 16px;font-size:.82rem}
+.as-nav .y-nav-diag{padding:10px 14px;font-size:.82rem}
+.ic-nav .y-nav-diag{padding:11px 15px;font-size:.82rem}
+.site-nav .y-nav-diag{padding:11px 16px;font-size:.9rem;border-radius:0}
+.r-nav .y-nav-diag{height:44px;padding:0 18px;margin-left:auto;font-size:.86rem}
+
+/* ホームのヘッダーは白背景のCTAが隣に来るため、余白だけ調整 */
+.r-nav .y-nav-diag + .r-nav__cta{margin-left:8px}
+
+/* 各レイアウトはモバイルで「CTA以外のナビ」を隠す。無料診断は残す */
+.b-nav a.y-nav-diag,
+.as-nav a.y-nav-diag,
+.ic-nav a.y-nav-diag,
+.site-nav a.y-nav-diag{display:inline-flex}
+
+@media(max-width:600px){
+  /* 画面が狭いときはヘッダーを無料相談だけにし、診断はフローティングバナーへ委ねる */
+  .b-nav .y-nav-diag,
+  .as-nav .y-nav-diag,
+  .ic-nav .y-nav-diag,
+  .site-nav .y-nav-diag{display:none}
+}
+@media(max-width:680px){
+  /* ホームはハンバーガー内に入るので、そのまま縦並びで表示する */
+  .r-nav .y-nav-diag{width:100%;height:48px;margin:12px 0 0}
+  .r-nav .y-nav-diag + .r-nav__cta{margin-left:0}
+}
+
+/* --- 問い合わせフォームへ診断結果を引き継いだときの注記 --- */
+.diagnosis-notice{
+  margin:0;
+  padding:16px 18px;
+  background:#e6ecfd;
+  border-left:3px solid #1e49e2;
+  font-size:.84rem;
+  line-height:1.85;
+  color:#071b34;
+}
+
+/* --- フローティングバナー --- */
+.y-float{
+  position:fixed;
+  z-index:80;
+  right:24px;
+  bottom:24px;
+  display:flex;
+  align-items:stretch;
+  gap:10px;
+  padding:12px;
+  /* 白背景と濃紺セクションの両方で輪郭が出る中間の明度にする */
+  background:#12325a;
+  border:1px solid rgba(118,210,255,.42);
+  box-shadow:0 18px 50px rgba(4,14,28,.42);
+  opacity:0;
+  transform:translateY(16px);
+  pointer-events:none;
+  transition:opacity .28s ease,transform .28s ease;
+}
+.y-float.is-visible{opacity:1;transform:translateY(0);pointer-events:auto}
+
+.y-float__link{
+  display:flex;
+  min-width:150px;
+  flex-direction:column;
+  justify-content:center;
+  gap:3px;
+  padding:12px 18px;
+  font-family:"Noto Sans JP",sans-serif;
+  text-decoration:none;
+  transition:background-color .2s ease,color .2s ease;
+}
+.y-float__link small{
+  font-family:"DM Sans",sans-serif;
+  font-size:.6rem;
+  font-weight:700;
+  letter-spacing:.14em;
+  opacity:.7;
+}
+.y-float__link strong{font-size:.92rem;font-weight:700;white-space:nowrap}
+
+.y-float__link--diag{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.55)}
+.y-float__link--diag:hover{background:rgba(255,255,255,.14)}
+.y-float__link--contact{background:#fff;color:#071b34}
+.y-float__link--contact:hover{background:#dbe6ff}
+
+.y-float__close{
+  position:absolute;
+  top:-11px;
+  right:-11px;
+  display:grid;
+  width:26px;
+  height:26px;
+  place-items:center;
+  padding:0;
+  background:#fff;
+  color:#071b34;
+  border:1px solid rgba(12,35,60,.2);
+  border-radius:50%;
+  font-size:.8rem;
+  line-height:1;
+  cursor:pointer;
+  transition:background-color .2s ease;
+}
+.y-float__close:hover{background:#dbe6ff}
+
+.y-float__link:focus-visible,
+.y-float__close:focus-visible{outline:3px solid #76d2ff;outline-offset:3px}
+
+@media(max-width:720px){
+  .y-float{
+    right:0;
+    bottom:0;
+    left:0;
+    gap:8px;
+    padding:10px 10px calc(10px + env(safe-area-inset-bottom));
+    border-right:0;
+    border-bottom:0;
+    border-left:0;
+    transform:translateY(100%);
+  }
+  .y-float.is-visible{transform:translateY(0)}
+  .y-float__link{min-width:0;flex:1;align-items:center;padding:12px 8px;text-align:center}
+  .y-float__link small{display:none}
+  .y-float__link strong{font-size:.88rem}
+  .y-float__close{top:-13px;right:10px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .y-float{transition:opacity .01ms}
+}
+@media print{
+  .y-float{display:none}
+}

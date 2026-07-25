@@ -28,6 +28,8 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"YOURNIST株式会社","email":"yournist@gmail.com","url":"https://yournist-keisyo-sample.vercel.app/"},{"@type":"Service","name":"デジタル事業承継支援","serviceType":"デジタル資産の棚卸し・業務ルール復元・標準化・段階移行・継続管理","provider":{"@type":"Organization","name":"YOURNIST株式会社"},"areaServed":"JP","audience":{"@type":"BusinessAudience","name":"業務の属人化やレガシー資産に課題を持つ中小企業"},"description":"中小企業のExcel、VBA、Access、古い業務システム、手作業、担当者の頭の中に埋もれた業務ルールを、検証可能で引き継げる経営資産へ変えます。"}]}
 </script>
+
+<link rel="stylesheet" href="assets/css/cta.css">
 </head>
 <body class="home-refresh">
 
@@ -36,7 +38,7 @@
   <button class="r-menu" aria-label="メニュー" aria-expanded="false"><span></span><span></span></button>
   <nav class="r-nav" id="siteNav">
     <a href="#challenge">私たちの挑戦</a><a href="#service">提供価値</a><a href="#business">業界別事業</a><a href="news/index.html">企業ニュース</a>
-    <a class="r-nav__cta" href="request/index.html?type=consultation">無料相談 <span>↗</span></a>
+    <a class="y-nav-diag" href="diagnosis/">無料診断</a><a class="r-nav__cta" href="request/index.html?type=consultation">無料相談 <span>↗</span></a>
   </nav>
 </header>
 
@@ -167,7 +169,7 @@
 </section>
 </main>
 
-<footer class="r-footer" id="company"><div class="r-shell r-footer__top"><div class="r-footer__identity"><span class="r-footer__logo"><img src="assets/img/yournist-logo-transparent.png" alt="YOURNIST"></span><p>中小企業に眠る業務の知識と仕組みを、次の担い手が使える経営資産へ。</p></div><div><p>MENU</p><a href="#challenge">私たちの挑戦</a><a href="#service">提供価値</a><a href="#business">業界別事業</a><a href="news/index.html">企業ニュース</a></div><div><p>CONTACT</p><a href="request/index.html?type=consultation">無料相談</a><a href="request/index.html?type=document">資料請求</a><a href="mailto:yournist@gmail.com">yournist@gmail.com</a></div></div><div class="r-shell r-footer__bottom"><span>© <span id="yr"></span> YOURNIST Inc.</span><a href="#">BACK TO TOP ↑</a></div></footer>
+<footer class="r-footer" id="company"><div class="r-shell r-footer__top"><div class="r-footer__identity"><span class="r-footer__logo"><img src="assets/img/yournist-logo-transparent.png" alt="YOURNIST"></span><p>中小企業に眠る業務の知識と仕組みを、次の担い手が使える経営資産へ。</p></div><div><p>MENU</p><a href="#challenge">私たちの挑戦</a><a href="#service">提供価値</a><a href="#business">業界別事業</a><a href="news/index.html">企業ニュース</a></div><div><p>CONTACT</p><a class="y-foot-diag" href="diagnosis/">無料診断</a><a href="request/index.html?type=consultation">無料相談</a><a href="request/index.html?type=document">資料請求</a><a href="mailto:yournist@gmail.com">yournist@gmail.com</a></div></div><div class="r-shell r-footer__bottom"><span>© <span id="yr"></span> YOURNIST Inc.</span><a href="#">BACK TO TOP ↑</a></div></footer>
 
 <script>
 const menu=document.querySelector('.r-menu'),nav=document.getElementById('siteNav');
@@ -176,5 +178,7 @@ nav&&nav.addEventListener('click',e=>{if(e.target.closest('a'))nav.classList.rem
 document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
 <script src="assets/js/motion.js" defer></script>
+
+<script src="assets/js/floating-cta.js" defer></script>
 </body>
 </html>

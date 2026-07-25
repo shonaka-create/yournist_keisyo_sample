@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ブラックボックス危険度診断｜無料・約2分で業務の属人化リスクを可視化｜YOURNIST</title>
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16x16.png">
+<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+<meta name="description" content="12の質問に答えるだけで、担当者が不在になったとき業務が止まる危険度を100点満点で可視化します。業務の集中度・仕組みの不透明さ・停止時の影響・復旧力の4軸で評価し、着手すべき優先順位を提示します。無料・登録不要。">
+<link rel="canonical" href="https://yournist-keisyo-sample.vercel.app/diagnosis/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ブラックボックス危険度診断｜約2分で業務の属人化リスクを可視化">
+<meta property="og:description" content="担当者が不在になったとき、業務は止まりますか。12問で危険度を100点満点で可視化し、着手すべき優先順位を提示します。無料・登録不要。">
+<meta property="og:site_name" content="YOURNIST">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://yournist-keisyo-sample.vercel.app/assets/img/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/business.css">
+<link rel="stylesheet" href="../assets/css/diagnosis.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","name":"ブラックボックス危険度診断","url":"https://yournist-keisyo-sample.vercel.app/diagnosis/","applicationCategory":"BusinessApplication","operatingSystem":"Web","inLanguage":"ja","description":"担当者が不在になったときに業務が止まる危険度を、12の質問から100点満点で可視化する無料の自己診断ツールです。","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"provider":{"@type":"Organization","name":"YOURNIST株式会社","url":"https://yournist-keisyo-sample.vercel.app/"}},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"トップ","item":"https://yournist-keisyo-sample.vercel.app/"},{"@type":"ListItem","position":2,"name":"ブラックボックス危険度診断"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"診断は無料ですか。個人情報の入力は必要ですか。","acceptedAnswer":{"@type":"Answer","text":"無料です。会社名やメールアドレスの入力は不要で、登録なしで結果まで確認できます。回答内容はお使いのブラウザ内でのみ処理され、送信されません。"}},
+{"@type":"Question","name":"どのくらい時間がかかりますか。","acceptedAnswer":{"@type":"Answer","text":"設問は12問で、選択式のみです。目安は約2分です。"}},
+{"@type":"Question","name":"何がわかりますか。","acceptedAnswer":{"@type":"Answer","text":"担当者が不在になったときに業務が止まる危険度を100点満点で表示し、業務の集中度・仕組みの不透明さ・停止時の影響・復旧力の4軸それぞれの状況を可視化します。あわせて、優先して着手すべき点を最大3つ提示します。"}},
+{"@type":"Question","name":"スコアはどのように計算されていますか。","acceptedAnswer":{"@type":"Answer","text":"業務の集中度・仕組みの不透明さ・停止時の影響・復旧力の4軸（合計30点）を100点に換算しています。引き継ぎに使える残り時間は点数には含めず、猶予が乏しい場合のみ危険度レベルを1段階引き上げる形で反映しています。"}},
+{"@type":"Question","name":"診断の結果を社内で共有できますか。","acceptedAnswer":{"@type":"Answer","text":"結果画面の「結果をコピーする」から、スコア・軸ごとの評価・回答内容をテキストとして取得できます。そのまま社内資料や稟議の添付資料としてお使いいただけます。"}},
+{"@type":"Question","name":"診断を受けると営業の連絡が来ますか。","acceptedAnswer":{"@type":"Answer","text":"診断だけであれば連絡は行いません。連絡先をいただくのは、結果画面からお客様が無料相談を申し込まれた場合のみです。"}}
+]}]}
+</script>
+
+<link rel="stylesheet" href="../assets/css/cta.css">
+</head>
+<body class="business-page dg-page">
+
+<header class="b-header">
+  <a class="b-brand b-brand--logo" href="../"><img src="../assets/img/yournist-logo-transparent.png" alt="YOURNIST"></a>
+  <nav class="b-nav">
+    <a href="../business/wholesale/">卸売業向け</a>
+    <a href="../business/manufacturing/">製造業向け</a>
+    <a href="../column/">お役立ち記事</a>
+    
+    <a class="y-nav-diag" href="./" aria-current="page">無料診断</a><a class="b-nav-cta" href="../request/index.html?type=consultation">無料相談 ↗</a>
+  </nav>
+</header>
+
+<main>
+<section class="dg-hero">
+  <div class="dg-shell">
+    <p class="dg-hero__eyebrow">FREE SELF-CHECK</p>
+    <h1>その業務、担当者が抜けたら<br><span>何日で止まりますか。</span></h1>
+    <p class="dg-hero__lead">12の質問に答えるだけで、業務がブラックボックス化している度合いを100点満点で可視化します。どの領域から手を付けるべきかまで、その場で表示されます。</p>
+    <div class="dg-hero__facts">
+      <span>所要時間 約2分</span>
+      <span>全12問・選択式</span>
+      <span>登録不要・無料</span>
+      <span>その場で結果表示</span>
+    </div>
+  </div>
+</section>
+
+<nav class="dg-crumb" aria-label="パンくず">
+  <div class="dg-shell">
+    <ol>
+      <li><a href="../">トップ</a></li>
+      <li>ブラックボックス危険度診断</li>
+    </ol>
+  </div>
+</nav>
+
+<section class="dg-intro">
+  <div class="dg-shell">
+    <h2>この診断でわかること</h2>
+    <div class="dg-intro__grid">
+      <div class="dg-intro__card">
+        <b>01</b>
+        <h3>危険度スコア</h3>
+        <p>担当者の不在が業務停止につながる可能性を、100点満点のスコアと4段階のレベルで表示します。</p>
+      </div>
+      <div class="dg-intro__card">
+        <b>02</b>
+        <h3>弱い箇所の特定</h3>
+        <p>業務の集中度・仕組みの不透明さ・停止時の影響・復旧力・残り時間の5軸で、どこが弱いのかを可視化します。</p>
+      </div>
+      <div class="dg-intro__card">
+        <b>03</b>
+        <h3>着手する順番</h3>
+        <p>すべてを一度に整理することはできません。評価の低い軸から、優先して着手すべき点を最大3つ提示します。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dg-tool">
+  <div class="dg-shell">
+    <div id="diagnosis"></div>
+    <noscript>
+      <p style="padding:28px;background:#f5f7fc;border-left:3px solid #1e49e2;line-height:1.9">この診断はブラウザ上で動作します。JavaScriptを有効にしてご利用ください。設問の内容だけを確認されたい場合や、担当者と一緒に確認されたい場合は、<a href="../request/index.html?type=consultation" style="color:#1e49e2;font-weight:700">無料相談</a>からお問い合わせください。</p>
+    </noscript>
+  </div>
+</section>
+
+<section class="dg-faq">
+  <div class="dg-shell">
+    <h2>よくあるご質問</h2>
+    <div class="dg-faq__list">
+      <details>
+        <summary>診断は無料ですか。個人情報の入力は必要ですか。</summary>
+        <p>無料です。会社名やメールアドレスの入力は不要で、登録なしで結果まで確認できます。回答内容はお使いのブラウザ内でのみ処理され、送信されません。</p>
+      </details>
+      <details>
+        <summary>どのくらい時間がかかりますか。</summary>
+        <p>設問は12問で、選択式のみです。目安は約2分です。</p>
+      </details>
+      <details>
+        <summary>何がわかりますか。</summary>
+        <p>担当者が不在になったときに業務が止まる危険度を100点満点で表示し、業務の集中度・仕組みの不透明さ・停止時の影響・復旧力の4軸それぞれの状況を可視化します。あわせて、優先して着手すべき点を最大3つ提示します。</p>
+      </details>
+      <details>
+        <summary>スコアはどのように計算されていますか。</summary>
+        <p>業務の集中度・仕組みの不透明さ・停止時の影響・復旧力の4軸（合計30点）を100点に換算しています。引き継ぎに使える残り時間は点数には含めず、猶予が乏しい場合のみ危険度レベルを1段階引き上げる形で反映しています。時間の余裕がないこと自体はリスクの原因ではなく、対処できる範囲を狭める要因だと考えているためです。</p>
+      </details>
+      <details>
+        <summary>診断の結果を社内で共有できますか。</summary>
+        <p>結果画面の「結果をコピーする」から、スコア・軸ごとの評価・回答内容をテキストとして取得できます。そのまま社内資料や稟議の添付資料としてお使いいただけます。</p>
+      </details>
+      <details>
+        <summary>診断を受けると営業の連絡が来ますか。</summary>
+        <p>診断だけであれば連絡は行いません。連絡先をいただくのは、結果画面からお客様が無料相談を申し込まれた場合のみです。</p>
+      </details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="b-footer">
+  <div class="b-shell b-footer__grid">
+    <div>
+      <span class="b-footer__logo"><img src="../assets/img/yournist-logo-transparent.png" alt="YOURNIST"></span>
+      <p>中小企業の業務とデジタル資産を、次の担い手が使える経営資産へ。</p>
+    </div>
+    <a href="../">企業サイトへ戻る ↑</a>
+  </div>
+</footer>
+
+<script src="../assets/js/diagnosis.js" defer></script>
+
+<script src="../assets/js/floating-cta.js" defer></script>
+</body>
+</html>

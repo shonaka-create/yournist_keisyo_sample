@@ -180,6 +180,7 @@
   text-wrap:pretty;
 }
 .r-hero__lead{max-width:660px;margin-top:44px}
+.home-refresh .r-hero h1 em::after{display:none}
 .r-nav__cta{
   min-width:0;
   height:44px;
