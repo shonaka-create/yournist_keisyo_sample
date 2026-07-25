@@ -31,7 +31,7 @@ window.GOOGLE_FORM_CONFIG = {
   action: "",
   fields: {
     // --- 必須項目 ---
-    requestType: "",    // お問い合わせ種別（document / consultation）
+    requestType: "",    // お問い合わせ種別（送信値は「資料を請求する」「無料相談を申し込む」）
     company: "",        // 会社名
     name: "",           // お名前
     email: "",          // メールアドレス

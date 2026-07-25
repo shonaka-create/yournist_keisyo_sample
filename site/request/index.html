@@ -25,11 +25,14 @@ if(!typeSelect.value)typeSelect.value='consultation';
 document.getElementById('diagnosisScore').value=d.score;
 document.getElementById('diagnosisLevel').value=d.level;}}catch(e){/* 結果を引き継げない場合も通常の問い合わせとして続行する */}}
 form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;const cfg=window.GOOGLE_FORM_CONFIG||{},data=new FormData(form);
+/* 種別は内部値(document/consultation)ではなく表示ラベルで送る。
+   Googleフォームの選択肢や集計シートを日本語で読めるようにするため。 */
+data.set('requestType',(typeSelect.selectedOptions[0]||{}).textContent||typeSelect.value);
 /* entry IDが未設定の項目は送信対象から除外する。全項目を埋めないと
    mailtoへ落ちてしまう以前の判定では、部分設定が事実上使えなかった。 */
 const mapped=Object.entries(cfg.fields||{}).filter(([,id])=>id);
 if(cfg.action&&mapped.length){const relay=document.createElement('form');relay.method='POST';relay.action=cfg.action;relay.target='_blank';mapped.forEach(([key,id])=>{const input=document.createElement('input');input.type='hidden';input.name=id;input.value=data.get(key)||'';relay.appendChild(input)});document.body.appendChild(relay);relay.submit();relay.remove();form.reset();status.textContent='送信しました。担当者よりご連絡します。';status.classList.add('is-visible');}
-else{const lines=['お問い合わせ種別: '+data.get('requestType'),(data.get('diagnosisScore')?'診断スコア: '+data.get('diagnosisScore')+'/100（レベル'+data.get('diagnosisLevel')+'）':''),'会社名: '+data.get('company'),'お名前: '+data.get('name'),'メール: '+data.get('email'),'電話: '+data.get('phone'),'業界: '+data.get('industry'),'従業員規模: '+data.get('employees'),'役職・部門: '+data.get('role'),'検討時期: '+data.get('timing'),'テーマ: '+data.get('topic'),'状況: '+data.get('message')].filter(Boolean);location.href='mailto:yournist@gmail.com?subject='+encodeURIComponent((data.get('requestType')==='document'?'資料請求':'無料相談')+' '+data.get('company'))+'&body='+encodeURIComponent(lines.join('\n'));status.textContent='メール作成画面を開きました。Googleフォーム接続後は、この画面から直接送信されます。';status.classList.add('is-visible');}}
+else{const lines=['お問い合わせ種別: '+data.get('requestType'),(data.get('diagnosisScore')?'診断スコア: '+data.get('diagnosisScore')+'/100（レベル'+data.get('diagnosisLevel')+'）':''),'会社名: '+data.get('company'),'お名前: '+data.get('name'),'メール: '+data.get('email'),'電話: '+data.get('phone'),'業界: '+data.get('industry'),'従業員規模: '+data.get('employees'),'役職・部門: '+data.get('role'),'検討時期: '+data.get('timing'),'テーマ: '+data.get('topic'),'状況: '+data.get('message')].filter(Boolean);location.href='mailto:yournist@gmail.com?subject='+encodeURIComponent(data.get('requestType')+' '+data.get('company'))+'&body='+encodeURIComponent(lines.join('\n'));status.textContent='メール作成画面を開きました。Googleフォーム接続後は、この画面から直接送信されます。';status.classList.add('is-visible');}}
 );
 </script>
 
