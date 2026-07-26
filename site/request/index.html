@@ -10,12 +10,13 @@
 <form class="request-form" id="requestForm"><h2>お客様情報</h2><div class="full request-type"><label for="requestType">お問い合わせ種別 *</label><select id="requestType" name="requestType" required><option value="">選択してください</option><option value="document">資料を請求する</option><option value="consultation">無料相談を申し込む</option></select></div><p class="diagnosis-notice full" id="diagnosisNotice" hidden></p><input type="hidden" name="diagnosisScore" id="diagnosisScore"><input type="hidden" name="diagnosisLevel" id="diagnosisLevel"><p class="form-intro">「*」は必須項目です。入力内容は資料送付とご相談対応のみに利用します。</p>
 <div><label for="company">会社名 *</label><input id="company" name="company" required autocomplete="organization" placeholder="例）○○商事株式会社"></div><div><label for="name">お名前 *</label><input id="name" name="name" required autocomplete="name" placeholder="例）山田 太郎"></div>
 <div><label for="email">メールアドレス *</label><input id="email" name="email" type="email" required autocomplete="email" placeholder="name@company.co.jp"></div><div><label for="phone">電話番号</label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="03-0000-0000"></div>
-<div><label for="industry">業界 *</label><select id="industry" name="industry" required><option value="">選択してください</option><option>医薬品卸</option><option>その他の卸売業</option><option>製造業</option><option>その他</option></select></div><div><label for="employees">従業員規模</label><select id="employees" name="employees"><option value="">選択してください</option><option>1〜19名</option><option>20〜49名</option><option>50〜99名</option><option>100〜299名</option><option>300名以上</option></select></div>
+<div><label for="industry">業界 *</label><select id="industry" name="industry" required><option value="">選択してください</option><option>医薬品卸</option><option>その他の卸売業</option><option>製造業</option><option>観光業</option><option>その他</option></select></div><div><label for="employees">従業員規模</label><select id="employees" name="employees"><option value="">選択してください</option><option>1〜19名</option><option>20〜49名</option><option>50〜99名</option><option>100〜299名</option><option>300名以上</option></select></div>
 <div><label for="role">役職・部門</label><input id="role" name="role" placeholder="例）代表取締役／業務部長"></div><div><label for="timing">検討時期</label><select id="timing" name="timing"><option value="">選択してください</option><option>すぐに相談したい</option><option>3か月以内</option><option>半年以内</option><option>情報収集中</option></select></div>
 <div class="full"><label for="topic">関心のあるテーマ *</label><select id="topic" name="topic" required><option value="">選択してください</option><option>受発注・価格・請求の属人化</option><option>在庫・発注・配送判断の属人化</option><option>問い合わせ・社内ナレッジ</option><option>製造技術・品質・保全の承継</option><option>事業承継前の業務棚卸し</option><option>どこから始めるべきか相談したい</option></select></div>
 <div class="full"><label for="message">現在の状況・知りたいこと</label><textarea id="message" name="message" placeholder="例）受発注と価格計算がベテラン1名に集中しており、来年の退職前に引き継げる状態にしたい。"></textarea></div>
 <label class="check full"><input type="checkbox" required><span>入力した情報を、資料送付および問い合わせ対応のために利用することに同意します。*</span></label>
-<p class="form-status full" id="formStatus" role="status"></p><button class="full" type="submit">入力内容を送信する →</button></form></div></main>
+<p class="form-status full" id="formStatus" role="status"></p><button class="full" type="submit">入力内容を送信する →</button>
+<section class="form-fallback full" id="formFallback" hidden><h3>メールソフトが開かない場合</h3><p>下の内容をコピーして、<a id="fallbackMail" href="mailto:yournist@gmail.com">yournist@gmail.com</a> 宛にお送りください。</p><textarea id="fallbackText" readonly rows="8"></textarea><button type="button" id="fallbackCopy">全文をコピーする</button></section></form></div></main>
 <footer class="r-footer" id="company"><div class="r-shell r-footer__top"><div class="r-footer__identity"><span class="r-footer__logo"><img src="../assets/img/yournist-logo-transparent.png" alt="YOURNIST"></span><p>中小企業に眠る業務の知識と仕組みを、次の担い手が使える経営資産へ。</p></div><div><p>MENU</p><a href="../index.html#challenge">私たちの挑戦</a><a href="../index.html#service">提供価値</a><a href="../index.html#business">業界別事業</a><a href="../news/index.html">企業ニュース</a></div><div><p>CONTACT</p><a class="y-foot-diag" href="../diagnosis/">無料診断</a><a href="../request/index.html?type=consultation">無料相談</a><a href="../request/index.html?type=document">資料請求</a><a href="mailto:yournist@gmail.com">yournist@gmail.com</a></div></div><div class="r-shell r-footer__bottom"><span>© <span data-year>2026</span> YOURNIST Inc.</span><a href="#">BACK TO TOP ↑</a></div></footer>
 <script src="form-config.js"></script><script>
 const form=document.getElementById('requestForm'),status=document.getElementById('formStatus'),typeSelect=document.getElementById('requestType');const params=new URLSearchParams(location.search);const queryType=params.get('type');if(['document','consultation'].includes(queryType))typeSelect.value=queryType;
@@ -34,8 +35,30 @@ data.set('requestType',(typeSelect.selectedOptions[0]||{}).textContent||typeSele
    mailtoへ落ちてしまう以前の判定では、部分設定が事実上使えなかった。 */
 const mapped=Object.entries(cfg.fields||{}).filter(([,id])=>id);
 if(cfg.action&&mapped.length){const relay=document.createElement('form');relay.method='POST';relay.action=cfg.action;relay.target='_blank';mapped.forEach(([key,id])=>{const input=document.createElement('input');input.type='hidden';input.name=id;input.value=data.get(key)||'';relay.appendChild(input)});document.body.appendChild(relay);relay.submit();relay.remove();form.reset();status.textContent='送信しました。担当者よりご連絡します。';status.classList.add('is-visible');}
-else{const lines=['お問い合わせ種別: '+data.get('requestType'),(data.get('diagnosisScore')?'診断スコア: '+data.get('diagnosisScore')+'/100（レベル'+data.get('diagnosisLevel')+'）':''),'会社名: '+data.get('company'),'お名前: '+data.get('name'),'メール: '+data.get('email'),'電話: '+data.get('phone'),'業界: '+data.get('industry'),'従業員規模: '+data.get('employees'),'役職・部門: '+data.get('role'),'検討時期: '+data.get('timing'),'テーマ: '+data.get('topic'),'状況: '+data.get('message')].filter(Boolean);location.href='mailto:yournist@gmail.com?subject='+encodeURIComponent(data.get('requestType')+' '+data.get('company'))+'&body='+encodeURIComponent(lines.join('\n'));status.textContent='メール作成画面を開きました。Googleフォーム接続後は、この画面から直接送信されます。';status.classList.add('is-visible');}}
+else{
+/* 未入力の任意項目は行ごと落とす。読みづらくなるうえ mailto を無駄に長くするため。 */
+const head=[['お問い合わせ種別',data.get('requestType')],['診断スコア',data.get('diagnosisScore')?data.get('diagnosisScore')+'/100（レベル'+data.get('diagnosisLevel')+'）':''],['会社名',data.get('company')],['お名前',data.get('name')],['メール',data.get('email')],['電話',data.get('phone')],['業界',data.get('industry')],['従業員規模',data.get('employees')],['役職・部門',data.get('role')],['検討時期',data.get('timing')],['テーマ',data.get('topic')]].filter(([,v])=>v).map(([k,v])=>k+': '+v);
+const full=head.concat(['状況: '+data.get('message')]).join('\n');
+const subject=data.get('requestType')+' '+data.get('company');
+/* mailto は実装依存でURL長の上限が厳しい（Windows+Outlookで約2,000字）。
+   診断結果を転記すると本文が切れる・起動しないため、長い場合は要点だけを
+   メールに載せ、全文は画面からコピーして送れるようにする。 */
+const brief=encodeURIComponent(full).length>1500
+  ? head.concat(['状況: （長文のため、画面の「全文をコピーする」からお送りください）']).join('\n')
+  : full;
+const mailtoURL='mailto:yournist@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(brief);
+document.getElementById('fallbackText').value=full;
+document.getElementById('formFallback').hidden=false;
+/* パネル内のアドレスにも同じ下書きを持たせ、開き直せるようにする */
+document.getElementById('fallbackMail').href=mailtoURL;
+location.href=mailtoURL;
+status.textContent='メール作成画面を開きました。開かない場合は、下の内容をコピーして yournist@gmail.com へお送りください。';status.classList.add('is-visible');}}
 );
+/* フォールバック時の全文コピー */
+const fbCopy=document.getElementById('fallbackCopy'),fbText=document.getElementById('fallbackText');
+fbCopy.addEventListener('click',()=>{const done=()=>{fbCopy.textContent='コピーしました';setTimeout(()=>{fbCopy.textContent='全文をコピーする'},2000)};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(fbText.value).then(done,()=>{fbText.select();document.execCommand('copy');done()})}
+else{fbText.select();document.execCommand('copy');done()}});
 </script>
 
 <script src="../assets/js/floating-cta.js" defer></script>

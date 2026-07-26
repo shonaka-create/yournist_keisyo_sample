@@ -1151,6 +1151,21 @@ html{scroll-behavior:smooth;overflow-x:hidden}.business-page{--ink:#071b34;--blu
   }
 }
 
+/* 観光業LP：FVのコピー面と写真面の間合いを取る。
+   見出し・リード文が写真の縁へ寄って見えないよう、右ガターを広げ、
+   リード文の行長を上限で止め、写真側の左端も濃く落として境目を和らげる。 */
+@media(min-width:981px){
+  .business-page--tourism .b-hero__copy{
+    padding-right:clamp(64px,6.5vw,120px);
+  }
+  .business-page--tourism .b-hero__lead{
+    max-width:34em;
+  }
+  .business-page--tourism .b-hero__image::after{
+    background:linear-gradient(90deg,rgba(7,27,52,.62),rgba(7,27,52,0) 34%);
+  }
+}
+
 @media(max-width:980px){
   .wholesale-business-page .b-hero h1 .b-hero__line,
   .manufacturing-business-page .b-hero h1 .b-hero__line,
@@ -1389,3 +1404,38 @@ html{scroll-behavior:smooth;overflow-x:hidden}.business-page{--ink:#071b34;--blu
    H1 とリード文が詰まっていたため、同等以上の詳細度で指定し直す */
 .business-page .b-hero__lead{margin-top:clamp(26px,2.6vw,40px)}
 .business-page .b-hero__actions{margin-top:clamp(32px,3vw,46px)}
+
+/* 問い合わせフォーム：メールソフトが開かなかった場合の手動送信パネル */
+.form-fallback{
+  margin-top:26px;
+  padding:22px 24px;
+  background:#eef3f8;
+  border-left:3px solid #1e49e2;
+}
+.form-fallback[hidden]{display:none}
+.form-fallback h3{margin:0;font-size:1rem;font-weight:700}
+.form-fallback>p{margin:10px 0 0;font-size:.86rem;line-height:1.8}
+.form-fallback>p a{color:#1e49e2;font-weight:700;text-decoration:underline}
+.form-fallback textarea{
+  width:100%;
+  margin-top:14px;
+  padding:14px;
+  background:#fff;
+  border:1px solid rgba(12,35,60,.2);
+  font-family:inherit;
+  font-size:.84rem;
+  line-height:1.8;
+  resize:vertical;
+}
+.form-fallback button{
+  margin-top:12px;
+  padding:12px 20px;
+  background:#071b34;
+  color:#fff;
+  border:0;
+  font-family:inherit;
+  font-size:.86rem;
+  font-weight:700;
+  cursor:pointer;
+}
+.form-fallback button:hover{background:#153a62}
