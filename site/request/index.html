@@ -46,7 +46,11 @@ return}
 pairs.push([id,v])});
 if(unsent.length&&cfg.fields.message){const mi=pairs.find(p=>p[0]===cfg.fields.message);
 if(mi)mi[1]=(mi[1]?mi[1]+'\n\n':'')+'（フォームの選択肢に無い値: '+unsent.join(' / ')+'）'}
-const relay=document.createElement('form');relay.method='POST';relay.action=cfg.action;relay.target='_blank';
+/* 送信先を隠しiframeにする。_blank だとGoogleの「回答を記録しました」画面が
+   新しいタブで開いてしまい、訪問者を自社サイトの外へ放り出すことになる。 */
+let frame=document.getElementById('gfRelay');
+if(!frame){frame=document.createElement('iframe');frame.id=frame.name='gfRelay';frame.style.display='none';frame.setAttribute('aria-hidden','true');document.body.appendChild(frame)}
+const relay=document.createElement('form');relay.method='POST';relay.action=cfg.action;relay.target='gfRelay';
 pairs.forEach(([n,v])=>{const input=document.createElement('input');input.type='hidden';input.name=n;input.value=v;relay.appendChild(input)});
 document.body.appendChild(relay);relay.submit();relay.remove();form.reset();status.textContent='送信しました。担当者よりご連絡します。';status.classList.add('is-visible');}
 else{
