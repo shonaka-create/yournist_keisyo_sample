@@ -57,16 +57,20 @@ COMMENTS = {
 
 
 def normalize(title):
-    """全角空白・必須記号などの揺れを吸収する"""
-    t = re.sub(r"[\s　]+", "", title or "")
+    """先頭の通し番号・空白・必須記号などの揺れを吸収する。
+    フォーム側で「1. お問い合わせ種別」のように番号を振っても対応づけできるようにする。"""
+    t = re.sub(r"^\s*\d+\s*[.．、)）]\s*", "", title or "")
+    t = re.sub(r"[\s　]+", "", t)
     return t.rstrip("*＊必須")
 
 
 def fetch(url):
+    """HTMLと、リダイレクト解決後の実URLを返す。
+    forms.gle の短縮URLをそのまま渡せるようにするため、解決後のURLを使う。"""
     view = url.replace("/formResponse", "/viewform")
     req = urllib.request.Request(view, headers={"User-Agent": "Mozilla/5.0"})
     with urllib.request.urlopen(req, timeout=30) as res:
-        return res.read().decode("utf-8", "replace")
+        return res.read().decode("utf-8", "replace"), res.geturl()
 
 
 def parse_questions(html):
@@ -84,8 +88,62 @@ def parse_questions(html):
             continue  # 見出しや説明文のみのブロック
         entry_id = entries[0][0]
         options = [o[0] for o in (entries[0][1] or [])] if len(entries[0]) > 1 and entries[0][1] else []
-        questions.append({"title": title, "entry": "entry.%s" % entry_id, "options": options})
+        required = bool(entries[0][2]) if len(entries[0]) > 2 else False
+        questions.append({"title": title, "entry": "entry.%s" % entry_id,
+                          "options": options, "required": required})
     return questions
+
+
+def check_login_required(html):
+    """メールアドレスの「確認済み」収集が有効だと、サイトからの送信が401で弾かれる。
+    訪問者にもGoogleログインを強制するため、公開フォームでは必ず外す必要がある。"""
+    m = re.search(r"FB_PUBLIC_LOAD_DATA_\s*=\s*(\[.*?\]);\s*</script>", html, re.S)
+    data = json.loads(m.group(1))
+    tail = data[1][2:] if len(data[1]) > 2 else []
+    for v in tail:
+        if isinstance(v, list) and v and v[0] == 2 and len(v) == 1:
+            return True
+    return False
+
+
+def site_form_spec():
+    """サイト側フォームの選択肢と必須/任意を読み取る"""
+    html = (ROOT / "site" / "request" / "index.html").read_text(encoding="utf-8")
+    form = re.search(r'<form class="request-form".*?</form>', html, re.S).group(0)
+    spec = {}
+    for m in re.finditer(r'<(select|input|textarea)([^>]*)id="([^"]+)"([^>]*)>(.*?)</\1>|'
+                         r'<input([^>]*)id="([^"]+)"([^>]*)>', form, re.S):
+        attrs = "".join(x for x in m.groups()[:4] if x) if m.group(1) else "".join(
+            x for x in m.groups()[5:] if x)
+        fid = m.group(3) or m.group(7)
+        if not fid:
+            continue
+        opts = [o for o in re.findall(r'<option[^>]*>([^<]+)</option>', m.group(5) or "")
+                if o != "選択してください"]
+        spec[fid] = {"required": "required" in attrs, "options": opts}
+    return spec
+
+
+def check_consistency(questions):
+    """必須設定と選択肢のズレを洗い出す。ズレたまま繋ぐと送信が失敗する。"""
+    site = site_form_spec()
+    key_by_title = {normalize(t): k for t, k in FIELD_TITLES.items()}
+    problems = []
+    for q in questions:
+        key = key_by_title.get(normalize(q["title"]))
+        if not key or key not in site:
+            continue
+        s = site[key]
+        if q.get("required") and not s["required"]:
+            problems.append("「%s」がフォーム側で必須。サイト側は任意のため、"
+                            "未入力のまま送ると送信が失敗します → 必須を外してください" % q["title"])
+        if "" in q["options"]:
+            problems.append("「%s」に空の選択肢が残っています → 削除してください" % q["title"])
+        missing = [o for o in s["options"] if o and o not in q["options"]]
+        if missing:
+            problems.append("「%s」にサイト側の選択肢がありません: %s → 追加してください"
+                            % (q["title"], " / ".join(missing)))
+    return problems
 
 
 def render_config(action, mapping):
@@ -113,7 +171,7 @@ def main():
     if len(sys.argv) < 2:
         raise SystemExit(__doc__)
     url = sys.argv[1].strip()
-    html = fetch(url)
+    html, resolved = fetch(url)
     questions = parse_questions(html)
 
     mapping, matched_titles = {}, set()
@@ -127,12 +185,11 @@ def main():
             mapping[key] = q["entry"]
             matched_titles.add(q["title"])
 
-    action = re.sub(r"/viewform.*$", "/formResponse", url)
+    action = re.sub(r"/viewform.*$", "/formResponse", resolved.split("?")[0])
     if not action.endswith("/formResponse"):
-        action = url.rstrip("/") + "/formResponse"
+        action = resolved.split("?")[0].rstrip("/") + "/formResponse"
 
-    CONFIG.write_text(render_config(action, mapping), encoding="utf-8")
-
+    print("解決後のフォームURL: %s" % resolved.split("?")[0])
     print("action: %s" % action)
     print("\n--- 対応づけできた項目 (%d/%d) ---" % (len(mapping), len(FIELD_TITLES)))
     for key in ORDER:
@@ -151,6 +208,29 @@ def main():
         print("\n--- 対応先がないフォーム側の質問 ---")
         for t in extra:
             print("  ??   「%s」" % t)
+
+    blockers = []
+    if check_login_required(html):
+        blockers.append("メールアドレスが「確認済み」で自動収集される設定です。"
+                        "この状態ではサイトからの送信が401で拒否され、"
+                        "訪問者にもGoogleログインが強制されます。\n"
+                        "       → 設定タブ →「回答」→「メールアドレスを収集する」を"
+                        "「回答者からの入力」または「収集しない」へ変更してください。")
+    blockers += check_consistency(questions)
+    if blockers:
+        print("\n=== 送信が失敗する設定が残っています（要修正） ===")
+        for i, b in enumerate(blockers, 1):
+            print("  %d. %s" % (i, b))
+        # 不備があるまま action を書くと、サイトは「送信しました」と表示しつつ
+        # Googleフォーム側で弾かれ、問い合わせが消える。直るまで mailto を使い続ける。
+        CONFIG.write_text(render_config("", mapping), encoding="utf-8")
+        print("\n  → 取りこぼしを防ぐため、action は空のままにしました"
+              "（サイトは従来どおりメール下書きへフォールバックします）。")
+        print("  → 修正後にもう一度このコマンドを実行すると、Googleフォームへ切り替わります。")
+    else:
+        CONFIG.write_text(render_config(action, mapping), encoding="utf-8")
+        print("\n設定の不一致はありません。Googleフォームへの送信を有効にしました。")
+
     print("\n%s を更新しました。" % CONFIG.relative_to(ROOT))
 
 
