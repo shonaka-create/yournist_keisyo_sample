@@ -1383,13 +1383,31 @@ html{scroll-behavior:smooth;overflow-x:hidden}.business-page{--ink:#071b34;--blu
   overflow-wrap:normal;
   line-break:strict;
 }
-/* 1行が長くなりすぎない幅を確保したうえで、著者指定の改行を有効にする */
+/* 1行が長くなりすぎない幅を確保する */
 @media(min-width:760px){
   .business-page .b-heading{max-width:1040px}
   .business-page .b-heading h2{max-width:1000px}
-  .business-page .b-heading h2 br,
-  .business-page .b-cta h2 br,
-  .business-page .b-outcome-main h3 br{display:inline}
+}
+/* 著者指定の改行はスマホでも有効にする。狭い画面で <br> を消していたため
+   「業務改善の先に／ある、経営の変化。」のように語中で割れていた。 */
+.business-page .b-heading h2 br,
+.business-page .b-cta h2 br,
+.business-page .b-outcome-main h3 br{display:inline}
+/* さらに自動折り返しは .wb（文節）の境目だけで起こるようにする。
+   1行に収まるときは折り返さないので、幅に応じて改行数が変わる。 */
+.business-page .b-heading h2 .wb,
+.business-page .b-cta h2 .wb,
+.business-page .b-outcome-main h3 .wb{display:inline-block}
+/* 見出しの器は .b-shell が 1200px で止まるのに font-size は vw で伸び続けるため、
+   1600px 前後から1行が器に収まらず語中で割れていた。上限を器に合わせる。 */
+@media(min-width:621px){
+  .business-page .b-heading h2{font-size:clamp(2.6rem,4vw,3.95rem)}
+  .business-page .b-cta h2{font-size:clamp(2.6rem,4.2vw,3.5rem)}
+}
+/* スマホは1行あたりの文字数を確保する（文節が行内で割れないサイズ） */
+@media(max-width:620px){
+  .business-page .b-heading h2{font-size:clamp(2rem,8.6vw,2.5rem)}
+  .business-page .b-cta h2{font-size:clamp(2rem,8.6vw,2.6rem)}
 }
 /* 見出しの器（1カラム幅）に収まるサイズへ。指定改行と自動折り返しが競合しない */
 .business-page .b-outcome-main h3{

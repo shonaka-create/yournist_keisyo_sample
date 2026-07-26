@@ -417,3 +417,23 @@
   .home-refresh .r-hero__lead{margin-top:26px}
   .home-refresh .r-hero__actions{margin-top:28px}
 }
+
+/* ------------------------------------------------------------------
+   セクション見出しの改行位置
+   自動折り返しは .wb（文節）の境目だけで起こるようにする。1行に収まるときは
+   折り返さないため、幅に応じて改行数が変わる。
+   ------------------------------------------------------------------ */
+.home-refresh .r-heading h2 .wb,
+.home-refresh .r-statement h2 .wb,
+.home-refresh .r-final h2 .wb{display:inline-block;color:inherit}
+/* 器（.r-shell）は 1240px で止まるのに font-size は vw で伸び続けるため、
+   1500px 前後から「調査から移行後の運用ま／で、」のように語中で割れていた。 */
+@media(min-width:681px){
+  .home-refresh .r-heading h2{font-size:clamp(2.8rem,4.5vw,4.25rem)}
+  .home-refresh .r-final h2{font-size:clamp(3rem,4.6vw,4.1rem)}
+}
+/* スマホは1行あたりの文字数を確保する（文節が行内で割れないサイズ） */
+@media(max-width:680px){
+  .home-refresh .r-heading h2{font-size:2.3rem}
+  .home-refresh .r-statement h2{font-size:2.5rem}
+}
