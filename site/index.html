@@ -30,6 +30,8 @@
 </script>
 
 <link rel="stylesheet" href="assets/css/cta.css">
+<link rel="stylesheet" href="assets/css/site-footer.css">
+<link rel="stylesheet" href="assets/css/cta-buttons.css">
 </head>
 <body class="home-refresh">
 
@@ -169,16 +171,17 @@
 </section>
 </main>
 
-<footer class="r-footer" id="company"><div class="r-shell r-footer__top"><div class="r-footer__identity"><span class="r-footer__logo"><img src="assets/img/yournist-logo-transparent.png" alt="YOURNIST"></span><p>中小企業に眠る業務の知識と仕組みを、次の担い手が使える経営資産へ。</p></div><div><p>MENU</p><a href="#challenge">私たちの挑戦</a><a href="#service">提供価値</a><a href="#business">業界別事業</a><a href="news/index.html">企業ニュース</a></div><div><p>CONTACT</p><a class="y-foot-diag" href="diagnosis/">無料診断</a><a href="request/index.html?type=consultation">無料相談</a><a href="request/index.html?type=document">資料請求</a><a href="mailto:yournist@gmail.com">yournist@gmail.com</a></div></div><div class="r-shell r-footer__bottom"><span>© <span id="yr"></span> YOURNIST Inc.</span><a href="#">BACK TO TOP ↑</a></div></footer>
+<footer class="r-footer" id="company"><div class="r-shell r-footer__top"><div class="r-footer__identity"><span class="r-footer__logo"><img src="assets/img/yournist-logo-transparent.png" alt="YOURNIST"></span><p>中小企業に眠る業務の知識と仕組みを、次の担い手が使える経営資産へ。</p></div><div><p>MENU</p><a href="#challenge">私たちの挑戦</a><a href="#service">提供価値</a><a href="#business">業界別事業</a><a href="news/index.html">企業ニュース</a></div><div><p>CONTACT</p><a class="y-foot-diag" href="diagnosis/">無料診断</a><a href="request/index.html?type=consultation">無料相談</a><a href="request/index.html?type=document">資料請求</a><a href="mailto:yournist@gmail.com">yournist@gmail.com</a></div></div><div class="r-shell r-footer__bottom"><span>© <span data-year>2026</span> YOURNIST Inc.</span><a href="#">BACK TO TOP ↑</a></div></footer>
 
 <script>
 const menu=document.querySelector('.r-menu'),nav=document.getElementById('siteNav');
 menu&&menu.addEventListener('click',()=>{const open=nav.classList.toggle('is-open');menu.setAttribute('aria-expanded',open)});
 nav&&nav.addEventListener('click',e=>{if(e.target.closest('a'))nav.classList.remove('is-open')});
-document.getElementById('yr').textContent=new Date().getFullYear();
+
 </script>
 <script src="assets/js/motion.js" defer></script>
 
 <script src="assets/js/floating-cta.js" defer></script>
+<script src="assets/js/site-footer.js" defer></script>
 </body>
 </html>

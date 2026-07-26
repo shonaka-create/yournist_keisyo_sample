@@ -1354,3 +1354,38 @@ html{scroll-behavior:smooth;overflow-x:hidden}.business-page{--ink:#071b34;--blu
     line-height:1.85;
   }
 }
+
+/* ------------------------------------------------------------------
+   セクション見出しの改行位置
+   h2/h3 の <br> を一律 display:none にしていたため、見出しが自動折り返しで
+   「経営の変/化。」のように語の途中で割れていた。意図した位置で折り返せるよう、
+   セクション見出しに限り <br> を戻し、収まらない場合の折り返しも文節単位にする。
+   ------------------------------------------------------------------ */
+.business-page .b-heading h2,
+.business-page .b-cta h2,
+.business-page .b-outcome-main h3{
+  word-break:auto-phrase;
+  overflow-wrap:normal;
+  line-break:strict;
+}
+/* 1行が長くなりすぎない幅を確保したうえで、著者指定の改行を有効にする */
+@media(min-width:760px){
+  .business-page .b-heading{max-width:1040px}
+  .business-page .b-heading h2{max-width:1000px}
+  .business-page .b-heading h2 br,
+  .business-page .b-cta h2 br,
+  .business-page .b-outcome-main h3 br{display:inline}
+}
+/* 見出しの器（1カラム幅）に収まるサイズへ。指定改行と自動折り返しが競合しない */
+.business-page .b-outcome-main h3{
+  font-size:clamp(1.9rem,2.6vw,2.75rem);
+  line-height:1.3;
+}
+@media(max-width:980px){
+  .business-page .b-outcome-main h3{font-size:clamp(1.9rem,3.4vw,2.6rem)}
+}
+
+/* ヒーローの余白：.business-page p{margin-top:0} に打ち消されて
+   H1 とリード文が詰まっていたため、同等以上の詳細度で指定し直す */
+.business-page .b-hero__lead{margin-top:clamp(26px,2.6vw,40px)}
+.business-page .b-hero__actions{margin-top:clamp(32px,3vw,46px)}

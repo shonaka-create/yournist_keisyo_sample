@@ -93,7 +93,10 @@
   var STORAGE_KEY = 'yournist:diagnosis';
 
   var answers = new Array(QUESTIONS.length).fill(null);
-  var root, stepsEl, resultEl, barEl, countEl;
+  var root, stepsEl, resultEl, barEl, countEl, hintEl, logEl, logListEl;
+  var backBtn, submitBtn, cards = [];
+  var current = 0;
+  var advanceTimer = null;
 
   /* ---------- 採点 ---------- */
 
@@ -171,20 +174,89 @@
     return answers.filter(function (v) { return v !== null; }).length;
   }
 
+  /* 残り設問数から所要時間の目安を出す。1問あたり約10秒。 */
+  function remainingHint(n) {
+    var rest = QUESTIONS.length - n;
+    if (rest === 0) return '全問の回答が終わりました。結果を表示できます。';
+    var sec = rest * 10;
+    var time = sec < 60 ? '約' + sec + '秒' : '約' + Math.ceil(sec / 60) + '分';
+    return 'あと' + rest + '問・' + time + 'で終わります';
+  }
+
   function updateProgress() {
     var n = answered();
     barEl.style.width = (n / QUESTIONS.length * 100) + '%';
     countEl.textContent = n + ' / ' + QUESTIONS.length;
-    root.querySelector('.dg-submit').disabled = n < QUESTIONS.length;
+    hintEl.textContent = remainingHint(n);
+    submitBtn.disabled = n < QUESTIONS.length;
+    /* 全問そろうまで結果ボタンは出さない。1問ずつの画面を情報過多にしないため。 */
+    submitBtn.hidden = n < QUESTIONS.length;
+  }
+
+  /* 回答済みの設問と選んだ内容を積み上げて見せる。
+     どこまで答えたかが常に見えるので、途中離脱を防ぎやすい。 */
+  function renderLog() {
+    logListEl.innerHTML = '';
+    var shown = 0;
+    QUESTIONS.forEach(function (q, i) {
+      if (answers[i] === null) return;
+      shown += 1;
+      var li = h('li', 'dg-log__item');
+      if (i === current) li.classList.add('is-editing');
+
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'dg-log__edit';
+      btn.appendChild(h('span', 'dg-log__no', 'Q' + (i + 1)));
+      btn.appendChild(h('span', 'dg-log__q', q.q));
+      btn.appendChild(h('span', 'dg-log__a', q.a[answers[i]]));
+      btn.appendChild(h('span', 'dg-log__act', i === current ? '編集中' : '修正する'));
+      btn.addEventListener('click', function () { goTo(i); });
+
+      li.appendChild(btn);
+      logListEl.appendChild(li);
+    });
+    logEl.hidden = shown === 0;
+  }
+
+  function goTo(index, scroll) {
+    if (index < 0 || index >= QUESTIONS.length) return;
+    if (advanceTimer) { clearTimeout(advanceTimer); advanceTimer = null; }
+    current = index;
+    cards.forEach(function (card, i) { card.hidden = i !== index; });
+    backBtn.disabled = index === 0;
+    backBtn.hidden = index === 0;
+    renderLog();
+    /* 初期表示（scroll===false）では、勝手にスクロール・フォーカスを奪わない */
+    if (scroll === false) return;
+    scrollToStep();
+    var checked = cards[index].querySelector('input:checked');
+    (checked || cards[index].querySelector('input')).focus({ preventScroll: true });
+  }
+
+  /* 設問がヘッダーと進捗バーの下に来るまでだけスクロールする。
+     毎回ページを飛ばすと、かえって現在地を見失うため。 */
+  function scrollToStep() {
+    var card = cards[current];
+    var top = card.getBoundingClientRect().top;
+    /* 固定ヘッダー＋進捗バーの下に設問が出る位置を基準にする */
+    var header = document.querySelector('.b-header');
+    var progress = root.querySelector('.dg-progress');
+    var offset = (header ? header.getBoundingClientRect().height : 78)
+      + (progress ? progress.getBoundingClientRect().height : 90) + 16;
+    if (top < offset || top > window.innerHeight * 0.6) {
+      window.scrollTo({ top: window.scrollY + top - offset, behavior: 'smooth' });
+    }
   }
 
   function renderQuestions() {
     QUESTIONS.forEach(function (q, i) {
       var card = h('li', 'dg-q');
       card.id = 'dg-q' + (i + 1);
+      card.hidden = true;
 
       var head = h('div', 'dg-q__head');
-      head.appendChild(h('span', 'dg-q__no', 'Q' + (i + 1)));
+      head.appendChild(h('span', 'dg-q__no', 'Q' + (i + 1) + ' / ' + QUESTIONS.length));
       head.appendChild(h('span', 'dg-q__axis', AXES[q.axis].label));
       card.appendChild(head);
 
@@ -209,8 +281,16 @@
           answers[i] = v;
           card.classList.add('is-answered');
           updateProgress();
-          var next = root.querySelector('#dg-q' + (i + 2));
-          if (next) next.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          renderLog();
+          /* 選択が反映されたことを見せてから次へ送る */
+          if (advanceTimer) clearTimeout(advanceTimer);
+          if (i + 1 < QUESTIONS.length) {
+            advanceTimer = setTimeout(function () { goTo(i + 1); }, 320);
+          } else {
+            /* 最後の設問を答えた直後は、結果ボタンを必ず視界へ入れる */
+            submitBtn.focus({ preventScroll: true });
+            submitBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
         });
         wrap.appendChild(input);
         wrap.appendChild(h('span', 'dg-opt__mark'));
@@ -220,6 +300,7 @@
       fs.appendChild(opts);
       card.appendChild(fs);
       stepsEl.appendChild(card);
+      cards.push(card);
     });
   }
 
@@ -317,6 +398,7 @@
       resultEl.hidden = true;
       root.querySelector('.dg-form').hidden = false;
       updateProgress();
+      goTo(0, false);
       root.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
     actions.appendChild(again);
@@ -345,15 +427,35 @@
     barEl = h('div', 'dg-progress__bar');
     track.appendChild(barEl);
     progress.appendChild(track);
+    hintEl = h('p', 'dg-progress__hint', remainingHint(0));
+    hintEl.setAttribute('role', 'status');
+    progress.appendChild(hintEl);
     form.appendChild(progress);
 
     stepsEl = h('ol', 'dg-questions');
     form.appendChild(stepsEl);
 
-    var submit = h('button', 'dg-btn dg-btn--primary dg-submit', '診断結果を見る →');
-    submit.type = 'submit';
-    submit.disabled = true;
-    form.appendChild(submit);
+    var actions = h('div', 'dg-actions');
+    backBtn = h('button', 'dg-btn dg-btn--ghost dg-back', '← 前の設問へ');
+    backBtn.type = 'button';
+    backBtn.hidden = true;
+    backBtn.addEventListener('click', function () { goTo(current - 1); });
+    actions.appendChild(backBtn);
+
+    submitBtn = h('button', 'dg-btn dg-btn--primary dg-submit', '診断結果を見る →');
+    submitBtn.type = 'submit';
+    submitBtn.disabled = true;
+    submitBtn.hidden = true;
+    actions.appendChild(submitBtn);
+    form.appendChild(actions);
+
+    logEl = h('section', 'dg-log');
+    logEl.hidden = true;
+    logEl.appendChild(h('h3', 'dg-log__title', 'ここまでの回答'));
+    logListEl = h('ol', 'dg-log__list');
+    logEl.appendChild(logListEl);
+    logEl.appendChild(h('p', 'dg-log__note', '選び直したい設問は「修正する」から戻れます。'));
+    form.appendChild(logEl);
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -380,6 +482,7 @@
 
     renderQuestions();
     updateProgress();
+    goTo(0, false);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

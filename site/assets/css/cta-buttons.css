@@ -1,0 +1,193 @@
+/* 全ページ共通のCV導線（無料相談を申し込む／資料を請求する）
+   ・主従をはっきりさせる：申し込み＝ブランドブルーの塗り、資料請求＝枠線
+   ・押せることが一目で分かるよう、矢印を丸チップ化しホバーで前進させる
+   ・面積・影・光沢で「ボタンらしさ」を出し、クリック率を上げる
+   business.css / refresh.css の後に読み込む前提。 */
+
+:root{
+  --cv-blue:#2a5bff;
+  --cv-blue-deep:#1533b4;
+  --cv-ink:#071b34;
+}
+
+/* ---------- 共通の骨格 ---------- */
+.r-button,
+.b-btn{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  gap:18px;
+  border-radius:4px;
+  font-weight:700;
+  letter-spacing:.01em;
+  transition:transform .22s ease,box-shadow .22s ease,
+             background-color .22s ease,color .22s ease,border-color .22s ease;
+}
+
+/* 矢印を丸チップにして、押下対象であることを視覚化する */
+.r-button--light>span,
+.r-button--outline>span,
+.b-btn--light>span,
+.b-btn--ghost>span{
+  display:inline-grid;
+  flex:none;
+  width:30px;
+  height:30px;
+  place-items:center;
+  border-radius:50%;
+  font-size:.92rem;
+  font-weight:700;
+  line-height:1;
+  transition:transform .22s ease,background-color .22s ease,color .22s ease;
+}
+
+/* ホバー時に光沢を一度だけ流し、視線を留める */
+.r-button--light::after,
+.b-btn--light::after{
+  position:absolute;
+  z-index:-1;
+  inset:0;
+  content:"";
+  background:linear-gradient(120deg,transparent 34%,rgba(255,255,255,.3) 50%,transparent 66%);
+  transform:translateX(-130%);
+  transition:transform .65s ease;
+}
+.r-button--light:hover::after,
+.b-btn--light:hover::after{transform:translateX(130%)}
+
+/* ---------- 主CTA：無料相談を申し込む ---------- */
+.r-button--light,
+.b-btn--light,
+.business-page .b-hero__actions .b-btn--light,
+.business-page .b-cta__buttons .b-btn--light{
+  min-height:64px;
+  padding:0 24px;
+  border:0;
+  background:linear-gradient(135deg,var(--cv-blue) 0%,var(--cv-blue-deep) 100%);
+  color:#fff;
+  box-shadow:0 14px 32px rgba(21,51,180,.34);
+}
+.r-button--light>span,
+.b-btn--light>span{
+  background:rgba(255,255,255,.2);
+  color:#fff;
+}
+.r-button--light:hover,
+.b-btn--light:hover,
+.b-btn--light:focus-visible,
+.business-page .b-cta__buttons .b-btn--light:hover,
+.business-page .b-cta__buttons .b-btn--light:focus-visible{
+  background:linear-gradient(135deg,#3d6bff 0%,#1a3ecb 100%);
+  color:#fff;
+  border:0;
+  box-shadow:0 20px 44px rgba(21,51,180,.46);
+  transform:translateY(-3px);
+}
+.r-button--light:hover>span,
+.b-btn--light:hover>span,
+.b-btn--light:focus-visible>span{
+  background:rgba(255,255,255,.34);
+  transform:translateX(4px);
+}
+
+/* ---------- 副CTA：資料を請求する ---------- */
+/* 濃色背景（ヒーロー）の上 */
+.r-button--outline,
+.business-page .b-hero__actions .b-btn--ghost{
+  min-height:64px;
+  padding:0 24px;
+  background:rgba(255,255,255,.13);
+  color:#fff;
+  border:1.5px solid rgba(255,255,255,.88);
+  backdrop-filter:blur(8px);
+}
+.r-button--outline>span,
+.b-hero__actions .b-btn--ghost>span{
+  background:rgba(255,255,255,.16);
+  color:#fff;
+}
+.r-button--outline:hover,
+.business-page .b-hero__actions .b-btn--ghost:hover,
+.business-page .b-hero__actions .b-btn--ghost:focus-visible{
+  background:#fff;
+  color:var(--cv-ink);
+  border-color:#fff;
+  transform:translateY(-3px);
+  box-shadow:0 18px 40px rgba(4,14,28,.3);
+}
+.r-button--outline:hover>span,
+.b-hero__actions .b-btn--ghost:hover>span{
+  background:rgba(7,27,52,.1);
+  color:var(--cv-ink);
+  transform:translateX(4px);
+}
+
+/* 明色背景（下部CTAセクション）の上 */
+.business-page .b-cta__buttons .b-btn--ghost{
+  min-height:64px;
+  background:#fff;
+  color:var(--cv-ink);
+  border:1.5px solid rgba(7,27,52,.34);
+  box-shadow:0 6px 18px rgba(7,27,52,.08);
+}
+.business-page .b-cta__buttons .b-btn--ghost>span{
+  background:rgba(7,27,52,.08);
+  color:var(--cv-ink);
+}
+.business-page .b-cta__buttons .b-btn--ghost:hover,
+.business-page .b-cta__buttons .b-btn--ghost:focus-visible{
+  background:var(--cv-ink);
+  color:#fff;
+  border-color:var(--cv-ink);
+  transform:translateY(-3px);
+  box-shadow:0 16px 34px rgba(7,27,52,.24);
+}
+.business-page .b-cta__buttons .b-btn--ghost:hover>span,
+.business-page .b-cta__buttons .b-btn--ghost:focus-visible>span{
+  background:rgba(255,255,255,.22);
+  color:#fff;
+  transform:translateX(4px);
+}
+
+/* ---------- 診断ページの主ボタン ---------- */
+.dg-btn--primary:not(:disabled){
+  background:linear-gradient(135deg,var(--cv-blue) 0%,var(--cv-blue-deep) 100%);
+  box-shadow:0 12px 28px rgba(21,51,180,.3);
+}
+.dg-btn--primary:not(:disabled):hover{
+  background:linear-gradient(135deg,#3d6bff 0%,#1a3ecb 100%);
+  box-shadow:0 18px 38px rgba(21,51,180,.42);
+  transform:translateY(-2px);
+}
+
+/* ---------- フォーカスと省モーション ---------- */
+.r-button:focus-visible,
+.b-btn:focus-visible,
+.dg-btn:focus-visible{outline:3px solid #76d2ff;outline-offset:3px}
+
+@media(max-width:620px){
+  .r-button--light,
+  .r-button--outline,
+  .business-page .b-hero__actions .b-btn--light,
+  .business-page .b-hero__actions .b-btn--ghost,
+  .business-page .b-cta__buttons .b-btn--light,
+  .business-page .b-cta__buttons .b-btn--ghost{
+    min-height:62px;
+    padding:0 20px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .r-button,
+  .b-btn,
+  .r-button--light>span,
+  .r-button--outline>span,
+  .b-btn--light>span,
+  .b-btn--ghost>span,
+  .dg-btn--primary{transition:none}
+  .r-button:hover,
+  .b-btn:hover,
+  .dg-btn--primary:hover{transform:none}
+  .r-button--light::after,
+  .b-btn--light::after{display:none}
+}
