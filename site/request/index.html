@@ -10,7 +10,7 @@
 <form class="request-form" id="requestForm"><h2>お客様情報</h2><div class="full request-type"><label for="requestType">お問い合わせ種別 *</label><select id="requestType" name="requestType" required><option value="">選択してください</option><option value="document">資料を請求する</option><option value="consultation">無料相談を申し込む</option></select></div><p class="diagnosis-notice full" id="diagnosisNotice" hidden></p><input type="hidden" name="diagnosisScore" id="diagnosisScore"><input type="hidden" name="diagnosisLevel" id="diagnosisLevel"><p class="form-intro">「*」は必須項目です。入力内容は資料送付とご相談対応のみに利用します。</p>
 <div><label for="company">会社名 *</label><input id="company" name="company" required autocomplete="organization" placeholder="例）○○商事株式会社"></div><div><label for="name">お名前 *</label><input id="name" name="name" required autocomplete="name" placeholder="例）山田 太郎"></div>
 <div><label for="email">メールアドレス *</label><input id="email" name="email" type="email" required autocomplete="email" placeholder="name@company.co.jp"></div><div><label for="phone">電話番号</label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="03-0000-0000"></div>
-<div><label for="industry">業界 *</label><select id="industry" name="industry" required><option value="">選択してください</option><option>医薬品卸</option><option>その他の卸売業</option><option>製造業</option><option>観光業</option><option>その他</option></select></div><div><label for="employees">従業員規模</label><select id="employees" name="employees"><option value="">選択してください</option><option>1〜19名</option><option>20〜49名</option><option>50〜99名</option><option>100〜299名</option><option>300名以上</option></select></div>
+<div><label for="industry">業界 *</label><select id="industry" name="industry" required><option value="">選択してください</option><option>卸売業</option><option>製造業</option><option>観光業</option><option>その他</option></select></div><div><label for="employees">従業員規模</label><select id="employees" name="employees"><option value="">選択してください</option><option>1〜19名</option><option>20〜49名</option><option>50〜99名</option><option>100〜299名</option><option>300名以上</option></select></div>
 <div><label for="role">役職・部門</label><input id="role" name="role" placeholder="例）代表取締役／業務部長"></div><div><label for="timing">検討時期</label><select id="timing" name="timing"><option value="">選択してください</option><option>すぐに相談したい</option><option>3か月以内</option><option>半年以内</option><option>情報収集中</option></select></div>
 <div class="full"><label for="topic">関心のあるテーマ *</label><select id="topic" name="topic" required><option value="">選択してください</option><option>受発注・価格・請求の属人化</option><option>在庫・発注・配送判断の属人化</option><option>問い合わせ・社内ナレッジ</option><option>製造技術・品質・保全の承継</option><option>事業承継前の業務棚卸し</option><option>どこから始めるべきか相談したい</option></select></div>
 <div class="full"><label for="message">現在の状況・知りたいこと</label><textarea id="message" name="message" placeholder="例）受発注と価格計算がベテラン1名に集中しており、来年の退職前に引き継げる状態にしたい。"></textarea></div>
@@ -34,7 +34,21 @@ data.set('requestType',(typeSelect.selectedOptions[0]||{}).textContent||typeSele
 /* entry IDが未設定の項目は送信対象から除外する。全項目を埋めないと
    mailtoへ落ちてしまう以前の判定では、部分設定が事実上使えなかった。 */
 const mapped=Object.entries(cfg.fields||{}).filter(([,id])=>id);
-if(cfg.action&&mapped.length){const relay=document.createElement('form');relay.method='POST';relay.action=cfg.action;relay.target='_blank';mapped.forEach(([key,id])=>{const input=document.createElement('input');input.type='hidden';input.name=id;input.value=data.get(key)||'';relay.appendChild(input)});document.body.appendChild(relay);relay.submit();relay.remove();form.reset();status.textContent='送信しました。担当者よりご連絡します。';status.classList.add('is-visible');}
+if(cfg.action&&mapped.length){
+const pairs=[],unsent=[];
+mapped.forEach(([key,id])=>{const v=data.get(key)||'';const list=(cfg.choices||{})[key];
+/* フォームの選択肢に無い値をそのまま送るとGoogle側が400で弾き、問い合わせが丸ごと消える。
+   「その他（自由入力）」があればそこへ載せ、無ければ本文へ退避して落とさない。 */
+if(v&&list&&list.indexOf(v)<0){
+if((cfg.other||{})[key]){pairs.push([id,'__other_option__'],[id+'.other_option_response',v])}
+else{unsent.push(key+'='+v)}
+return}
+pairs.push([id,v])});
+if(unsent.length&&cfg.fields.message){const mi=pairs.find(p=>p[0]===cfg.fields.message);
+if(mi)mi[1]=(mi[1]?mi[1]+'\n\n':'')+'（フォームの選択肢に無い値: '+unsent.join(' / ')+'）'}
+const relay=document.createElement('form');relay.method='POST';relay.action=cfg.action;relay.target='_blank';
+pairs.forEach(([n,v])=>{const input=document.createElement('input');input.type='hidden';input.name=n;input.value=v;relay.appendChild(input)});
+document.body.appendChild(relay);relay.submit();relay.remove();form.reset();status.textContent='送信しました。担当者よりご連絡します。';status.classList.add('is-visible');}
 else{
 /* 未入力の任意項目は行ごと落とす。読みづらくなるうえ mailto を無駄に長くするため。 */
 const head=[['お問い合わせ種別',data.get('requestType')],['診断スコア',data.get('diagnosisScore')?data.get('diagnosisScore')+'/100（レベル'+data.get('diagnosisLevel')+'）':''],['会社名',data.get('company')],['お名前',data.get('name')],['メール',data.get('email')],['電話',data.get('phone')],['業界',data.get('industry')],['従業員規模',data.get('employees')],['役職・部門',data.get('role')],['検討時期',data.get('timing')],['テーマ',data.get('topic')]].filter(([,v])=>v).map(([k,v])=>k+': '+v);

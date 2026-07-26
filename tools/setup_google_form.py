@@ -87,23 +87,31 @@ def parse_questions(html):
         if not title or not entries:
             continue  # 見出しや説明文のみのブロック
         entry_id = entries[0][0]
-        options = [o[0] for o in (entries[0][1] or [])] if len(entries[0]) > 1 and entries[0][1] else []
+        raw = (entries[0][1] or []) if len(entries[0]) > 1 else []
+        # 5番目の要素が1の空文字は Google の「その他（自由入力）」。通常の選択肢ではない。
+        options = [o[0] for o in raw if not (len(o) > 4 and o[4] == 1)]
+        has_other = any(len(o) > 4 and o[4] == 1 for o in raw)
         required = bool(entries[0][2]) if len(entries[0]) > 2 else False
-        questions.append({"title": title, "entry": "entry.%s" % entry_id,
-                          "options": options, "required": required})
+        questions.append({"title": title, "entry": "entry.%s" % entry_id, "options": options,
+                          "required": required, "other": has_other, "choice": bool(raw)})
     return questions
 
 
-def check_login_required(html):
-    """メールアドレスの「確認済み」収集が有効だと、サイトからの送信が401で弾かれる。
-    訪問者にもGoogleログインを強制するため、公開フォームでは必ず外す必要がある。"""
-    m = re.search(r"FB_PUBLIC_LOAD_DATA_\s*=\s*(\[.*?\]);\s*</script>", html, re.S)
-    data = json.loads(m.group(1))
-    tail = data[1][2:] if len(data[1]) > 2 else []
-    for v in tail:
-        if isinstance(v, list) and v and v[0] == 2 and len(v) == 1:
-            return True
-    return False
+def probe_anonymous_post(action):
+    """回答を1件も作らずに、匿名で送信できるかだけを確かめる。
+    必須項目を空にしたPOSTは記録されず、入力検証エラー(400)になる。
+    ログインが必要な設定だと、その手前で401が返るので区別できる。"""
+    import urllib.error
+    import urllib.parse
+    body = urllib.parse.urlencode({"entry.0": ""}).encode()
+    req = urllib.request.Request(action, data=body, headers={"User-Agent": "Mozilla/5.0"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as res:
+            return res.status
+    except urllib.error.HTTPError as e:
+        return e.code
+    except Exception:
+        return None
 
 
 def site_form_spec():
@@ -139,14 +147,30 @@ def check_consistency(questions):
                             "未入力のまま送ると送信が失敗します → 必須を外してください" % q["title"])
         if "" in q["options"]:
             problems.append("「%s」に空の選択肢が残っています → 削除してください" % q["title"])
+        # 「その他（自由入力）」があれば、選択肢に無い値もそちらへ載せて送れる
         missing = [o for o in s["options"] if o and o not in q["options"]]
-        if missing:
-            problems.append("「%s」にサイト側の選択肢がありません: %s → 追加してください"
+        if missing and not q.get("other"):
+            problems.append("「%s」にサイト側の選択肢がありません: %s → "
+                            "フォームに追加するか、サイト側の選択肢を合わせてください"
                             % (q["title"], " / ".join(missing)))
     return problems
 
 
-def render_config(action, mapping):
+def choice_maps(questions):
+    """選択肢と「その他」の有無を、サイト側が参照できる形で書き出す"""
+    key_by_title = {normalize(t): k for t, k in FIELD_TITLES.items()}
+    choices, others = {}, {}
+    for q in questions:
+        key = key_by_title.get(normalize(q["title"]))
+        if not key or not q.get("choice"):
+            continue
+        choices[key] = q["options"]
+        if q.get("other"):
+            others[key] = True
+    return choices, others
+
+
+def render_config(action, mapping, choices=None, others=None):
     lines = [
         "/* Googleフォーム連携の設定",
         " * tools/setup_google_form.py が自動生成しました。手で編集しても構いません。",
@@ -154,6 +178,8 @@ def render_config(action, mapping):
         ' *   python tools/setup_google_form.py "<公開フォームのURL>"',
         " *",
         " * action が空の場合は、メール下書き(mailto)へフォールバックします。",
+        " * choices はフォーム側が受け付ける選択肢。ここに無い値をそのまま送ると",
+        " * Googleが400で弾くため、other が true の項目は「その他」へ載せて送ります。",
         " */",
         "window.GOOGLE_FORM_CONFIG = {",
         '  action: "%s",' % action,
@@ -163,7 +189,16 @@ def render_config(action, mapping):
         lines.append('    %s: "%s",%s' % (
             key, mapping.get(key, ""),
             "".ljust(max(1, 22 - len(key) - len(mapping.get(key, "")))) + "// " + COMMENTS[key]))
-    lines += ["  }", "};", ""]
+    lines.append("  },")
+    lines.append("  choices: {")
+    for key, opts in (choices or {}).items():
+        lines.append("    %s: [%s]," % (key, ", ".join('"%s"' % o for o in opts)))
+    lines.append("  },")
+    lines.append("  other: {")
+    for key in (others or {}):
+        lines.append("    %s: true," % key)
+    lines.append("  }")
+    lines += ["};", ""]
     return "\n".join(lines)
 
 
@@ -210,26 +245,34 @@ def main():
             print("  ??   「%s」" % t)
 
     blockers = []
-    if check_login_required(html):
-        blockers.append("メールアドレスが「確認済み」で自動収集される設定です。"
-                        "この状態ではサイトからの送信が401で拒否され、"
-                        "訪問者にもGoogleログインが強制されます。\n"
+    status = probe_anonymous_post(action)
+    print("\n匿名送信の可否: HTTP %s -> %s" % (
+        status, {400: "OK（入力検証エラー＝送信自体は通る）",
+                 401: "NG（Googleログインが必要）"}.get(status, "要確認")))
+    if status == 401:
+        blockers.append("回答にGoogleログインが必要な設定です。"
+                        "サイトからの送信が401で拒否され、訪問者にもログインが強制されます。\n"
                         "       → 設定タブ →「回答」→「メールアドレスを収集する」を"
                         "「回答者からの入力」または「収集しない」へ変更してください。")
     blockers += check_consistency(questions)
+
+    choices, others = choice_maps(questions)
     if blockers:
         print("\n=== 送信が失敗する設定が残っています（要修正） ===")
         for i, b in enumerate(blockers, 1):
             print("  %d. %s" % (i, b))
         # 不備があるまま action を書くと、サイトは「送信しました」と表示しつつ
         # Googleフォーム側で弾かれ、問い合わせが消える。直るまで mailto を使い続ける。
-        CONFIG.write_text(render_config("", mapping), encoding="utf-8")
+        CONFIG.write_text(render_config("", mapping, choices, others), encoding="utf-8")
         print("\n  → 取りこぼしを防ぐため、action は空のままにしました"
               "（サイトは従来どおりメール下書きへフォールバックします）。")
         print("  → 修正後にもう一度このコマンドを実行すると、Googleフォームへ切り替わります。")
     else:
-        CONFIG.write_text(render_config(action, mapping), encoding="utf-8")
+        CONFIG.write_text(render_config(action, mapping, choices, others), encoding="utf-8")
         print("\n設定の不一致はありません。Googleフォームへの送信を有効にしました。")
+        for key, opts in choices.items():
+            print("  選択肢 %-12s %s%s" % (key, " / ".join(opts),
+                                        "  + その他(自由入力)" if others.get(key) else ""))
 
     print("\n%s を更新しました。" % CONFIG.relative_to(ROOT))
 
