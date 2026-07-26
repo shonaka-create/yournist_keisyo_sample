@@ -437,3 +437,60 @@
   .home-refresh .r-heading h2{font-size:2.3rem}
   .home-refresh .r-statement h2{font-size:2.5rem}
 }
+
+/* ------------------------------------------------------------------
+   OUR VIEW（ヒーローと OUR MISSION の間の課題認識セクション）
+   OUR MISSION と同じ構成（ラベル＋大見出し＋本文）を保ちつつ、白地・左上のバー・
+   本文2カラムで差をつける。文字サイズは OUR MISSION より一段小さくして、
+   ページの頂点が OUR MISSION のままになるようにする。
+   ------------------------------------------------------------------ */
+.home-refresh .r-view{position:relative;padding:118px 0;background:#fff}
+.home-refresh .r-view::before{position:absolute;top:0;left:0;width:18%;height:5px;content:"";background:#1e49e2}
+.home-refresh .r-view .r-section-no{margin-bottom:38px}
+.home-refresh .r-view h2{
+  max-width:820px;
+  font-size:clamp(2.6rem,3.4vw,3.5rem);
+  font-weight:600;
+  line-height:1.24;
+  letter-spacing:-.055em;
+}
+.home-refresh .r-view h2 em{font-style:normal;color:#1e49e2}
+.home-refresh .r-view h2 .wb{display:inline-block}
+.home-refresh .r-view__body{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(280px,.6fr);
+  align-items:start;
+  gap:clamp(40px,5vw,80px);
+  margin-top:46px;
+  max-width:1120px;
+}
+.home-refresh .r-view__body p{font-size:1.02rem;line-height:2.05}
+.home-refresh .r-view__note{
+  padding-left:26px;
+  border-left:2px solid #1e49e2;
+  font-weight:600;
+  line-height:1.95;
+}
+@media(max-width:980px){
+  .home-refresh .r-view__body{grid-template-columns:1fr;gap:30px;max-width:760px}
+}
+@media(max-width:680px){
+  .home-refresh .r-view{padding:78px 0}
+  .home-refresh .r-view::before{width:32%}
+  .home-refresh .r-view .r-section-no{margin-bottom:26px}
+  .home-refresh .r-view h2{font-size:2.2rem}
+  .home-refresh .r-view__body{margin-top:32px}
+  .home-refresh .r-view__body p{font-size:.98rem;line-height:1.95}
+  .home-refresh .r-view__note{padding-left:18px}
+}
+
+/* OUR POLICY：カード上部のラベル（.r-assurance-grid span は既存スタイル） */
+.home-refresh .r-assurance-grid span{display:block;letter-spacing:.16em}
+/* .r-assurance-grid span はラベル用の指定なので、見出し内の文節には効かせない */
+.home-refresh .r-assurance-grid h3 .wb{
+  display:inline-block;
+  font:inherit;
+  color:inherit;
+  letter-spacing:inherit;
+}
+.home-refresh .r-assurance .r-heading>p{margin-top:26px}
