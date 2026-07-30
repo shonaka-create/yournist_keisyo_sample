@@ -514,14 +514,22 @@
   line-height:1.58;
   letter-spacing:-.035em;
 }
-/* 「個人の中に → 会社の中に」。使命の中身を1行で示す。
+/* 「会社を動かしている判断と手順を、個人の中から → 会社の中へ。」
+   2行で1文。何が移るのかを先に書かないと、矢印の両端だけでは意味が伝わらない。
    枠や塗りを付けると押せるボタンに見えるため、文字と矢印だけで組む。 */
+.home-refresh .r-mission-shift-label{
+  margin-top:34px;
+  color:#0c233c;
+  font-size:1.05rem;
+  font-weight:600;
+  line-height:1.7;
+}
 .home-refresh .r-mission-shift{
   display:flex;
   align-items:center;
   flex-wrap:wrap;
   gap:18px;
-  margin-top:32px;
+  margin-top:10px;
   font-size:1.12rem;
   font-weight:600;
   line-height:1.6;
@@ -554,7 +562,8 @@
 @media(max-width:680px){
   .home-refresh .r-mission-body{gap:28px}
   .home-refresh .r-mission-lead{font-size:1.34rem;line-height:1.68}
-  .home-refresh .r-mission-shift{gap:14px;margin-top:26px;font-size:1.02rem}
+  .home-refresh .r-mission-shift-label{margin-top:26px;font-size:.98rem}
+  .home-refresh .r-mission-shift{gap:14px;margin-top:8px;font-size:1.02rem}
   .home-refresh .r-mission-shift i{width:28px}
   .home-refresh .r-mission-reason{padding-top:26px}
   .home-refresh .r-mission-reason p{font-size:.98rem;line-height:1.95}
