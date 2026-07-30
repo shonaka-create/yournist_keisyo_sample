@@ -495,27 +495,43 @@
 }
 .home-refresh .r-assurance .r-heading>p{margin-top:26px}
 
-/* OUR MISSION：事業定義（誰に・何を・どのように）を本文の下に並べる */
-.home-refresh .r-mission-def{
+/* OUR MISSION：宣言（左）と説明（右）に分ける。
+   1カラムの長文は1行が長くなり読み飛ばされるため、
+   短い宣言文を大きく置き、理由は本文サイズで右に流す。 */
+.home-refresh .r-mission-body{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:28px;
-  max-width:800px;
-  margin-top:46px;
+  grid-template-columns:minmax(0,1.02fr) minmax(300px,.98fr);
+  align-items:start;
+  gap:clamp(40px,5vw,84px);
+  max-width:1120px;
+  margin-top:44px;
+  padding-top:40px;
+  border-top:1px solid rgba(30,73,226,.28);
 }
-.home-refresh .r-mission-def>div{padding-top:18px;border-top:1px solid rgba(30,73,226,.28)}
-.home-refresh .r-mission-def dt{
-  margin-bottom:12px;
+.home-refresh .r-mission-lead{
+  font-size:clamp(1.4rem,2vw,1.85rem);
+  font-weight:600;
+  line-height:1.62;
+  letter-spacing:-.03em;
+}
+.home-refresh .r-mission-close{
+  margin-top:28px;
+  padding-left:22px;
+  border-left:2px solid #1e49e2;
   color:#1e49e2;
-  font-size:.78rem;
+  font-size:1rem;
   font-weight:700;
-  letter-spacing:.16em;
+  line-height:1.9;
 }
-.home-refresh .r-mission-def dd{margin:0;font-size:.95rem;line-height:1.9}
+.home-refresh .r-mission-body>div:last-child p{font-size:1.02rem;line-height:2.05}
+.home-refresh .r-mission-body>div:last-child p+p{margin-top:24px}
 @media(max-width:980px){
-  .home-refresh .r-mission-def{grid-template-columns:1fr;gap:24px;max-width:700px;margin-top:38px}
+  .home-refresh .r-mission-body{grid-template-columns:1fr;gap:34px;max-width:760px;margin-top:38px;padding-top:32px}
+  .home-refresh .r-mission-lead br{display:none}
 }
 @media(max-width:680px){
-  .home-refresh .r-mission-def{margin-top:32px}
-  .home-refresh .r-mission-def dd{font-size:.92rem}
+  .home-refresh .r-mission-body{gap:28px}
+  .home-refresh .r-mission-lead{font-size:1.3rem;line-height:1.7}
+  .home-refresh .r-mission-close{margin-top:22px;padding-left:18px;font-size:.96rem}
+  .home-refresh .r-mission-body>div:last-child p{font-size:.98rem;line-height:1.95}
 }
