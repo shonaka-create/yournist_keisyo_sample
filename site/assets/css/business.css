@@ -1457,3 +1457,70 @@ html{scroll-behavior:smooth;overflow-x:hidden}.business-page{--ink:#071b34;--blu
   cursor:pointer;
 }
 .form-fallback button:hover{background:#153a62}
+
+/* 支援実績ロゴスライダー（お問い合わせページ ファーストビュー直下） */
+.logo-strip{padding:44px 0 46px;background:#fff;border-bottom:1px solid var(--line)}
+.logo-strip__head{margin:0 0 26px;text-align:center}
+.logo-strip__label{
+  display:block;
+  font-family:"DM Sans",sans-serif;
+  font-size:.62rem;
+  font-weight:700;
+  letter-spacing:.17em;
+  color:var(--blue);
+}
+.logo-strip__title{margin:10px 0 0;font-size:.86rem;font-weight:700;line-height:1.7}
+/* 端をフェードさせ、ロゴが唐突に切れて見えないようにする */
+.logo-strip__viewport{
+  display:flex;
+  width:100%;
+  overflow:hidden;
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+}
+/* 同一トラックを2本並べて流し、1本が抜けきった時点で次が繋がるようにする */
+.logo-strip__track{
+  --logo-gap:40px;
+  display:flex;
+  flex:0 0 auto;
+  align-items:center;
+  /* トラックの継ぎ目もロゴ間と同じ間隔にするため、右パディングをgapに揃える */
+  gap:var(--logo-gap);
+  margin:0;
+  padding:0 var(--logo-gap) 0 0;
+  list-style:none;
+  animation:logo-strip-scroll 40s linear infinite;
+}
+.logo-strip__viewport:hover .logo-strip__track{animation-play-state:paused}
+.logo-strip__item{
+  display:grid;
+  flex:0 0 auto;
+  width:clamp(150px,17vw,210px);
+  height:74px;
+  place-items:center;
+  padding:0 14px;
+  background:#f5f4f0;
+  border:1px solid var(--line);
+  color:rgba(7,27,52,.42);
+  font-family:"DM Sans",sans-serif;
+  font-size:.82rem;
+  font-weight:700;
+  letter-spacing:.12em;
+}
+/* 差し替え後の実ロゴ画像用 */
+.logo-strip__item img{max-width:100%;max-height:46px;object-fit:contain}
+@keyframes logo-strip-scroll{
+  from{transform:translateX(0)}
+  to{transform:translateX(-100%)}
+}
+@media(max-width:620px){
+  .logo-strip{padding:34px 0 36px}
+  .logo-strip__track{--logo-gap:22px;animation-duration:28s}
+  .logo-strip__item{width:132px;height:62px}
+}
+/* 動きを減らす設定では自動スクロールを止め、横スクロールで閲覧できるようにする */
+@media(prefers-reduced-motion:reduce){
+  .logo-strip__viewport{overflow-x:auto}
+  .logo-strip__track{animation:none}
+  .logo-strip__track[aria-hidden="true"]{display:none}
+}
