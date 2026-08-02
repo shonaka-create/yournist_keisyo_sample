@@ -1,0 +1,22 @@
+# 公開リポジトリ (github.com/shonaka-create/yournist_keisyo_sample) は public。
+# 既定ですべて無視し、公開して良いものだけを明示的に許可する allowlist 方式。
+#
+# denylist にしないのは、新しく増えたディレクトリを取りこぼすため。
+# 特に sales/ には法人連絡先 13,617行(電話1,003件・メール148件)があり、
+# 一度 push すると git 履歴から消せない。
+#
+# 公開対象を追加するときは、ここに !/<dir>/ を1行足すこと。
+
+/*
+
+!/.gitignore
+!/vercel.json
+!/site/
+!/design/
+!/ads/
+!/docs/
+!/idea/
+!/tools/
+
+# 監査レポートは脆弱性の一覧なので、docs/ を許可した後に再度除外する
+docs/AUDIT-*.md

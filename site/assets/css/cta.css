@@ -56,6 +56,8 @@
 
 /* --- フローティングバナー --- */
 .y-float{
+  /* スクロールが深くなるほど JS が段階的に上げる（1 → 1.16） */
+  --y-float-scale:1;
   position:fixed;
   z-index:80;
   right:24px;
@@ -69,11 +71,16 @@
   border:1px solid rgba(118,210,255,.42);
   box-shadow:0 18px 50px rgba(4,14,28,.42);
   opacity:0;
-  transform:translateY(16px);
+  /* 画面外へはみ出さないよう右下を基点に拡大する */
+  transform-origin:100% 100%;
+  transform:translateY(16px) scale(var(--y-float-scale));
   pointer-events:none;
-  transition:opacity .28s ease,transform .28s ease;
+  transition:opacity .28s ease,transform .34s cubic-bezier(.22,.61,.36,1),box-shadow .34s ease;
 }
-.y-float.is-visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.y-float.is-visible{opacity:1;transform:scale(var(--y-float-scale));pointer-events:auto}
+/* 大きくなるほど影も強めて、前に出てくる印象にする */
+.y-float[data-grow="2"]{box-shadow:0 22px 58px rgba(4,14,28,.5)}
+.y-float[data-grow="3"]{box-shadow:0 26px 66px rgba(4,14,28,.58);border-color:rgba(118,210,255,.72)}
 
 .y-float__link{
   display:flex;
@@ -124,7 +131,9 @@
 .y-float__close:focus-visible{outline:3px solid #76d2ff;outline-offset:3px}
 
 @media(max-width:720px){
+  /* 横幅いっぱいのバーなので拡大はさせず、上下のスライドだけにする */
   .y-float{
+    --y-float-scale:1;
     right:0;
     bottom:0;
     left:0;

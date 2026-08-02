@@ -1,5 +1,6 @@
 /* フローティングバナー：無料診断 + 無料相談
    - ヒーローを読み終えたあたり（600px スクロール）で出現
+   - 読み進めるほど段階的に少しずつ大きくなり、下へ行くほど目立つ
    - フッターに重なる位置まで来たら退避
    - 診断ページ・問い合わせページ自身には出さない
    - 閉じたらそのセッション中は再表示しない */
@@ -8,6 +9,14 @@
 
   var DISMISS_KEY = 'yournist:float-dismissed';
   var SHOW_AFTER = 600;
+
+  /* 読了率に応じた拡大段階。連続変化だと変化に気づかないので段階的に上げる */
+  var GROW_STEPS = [
+    { from: 0,   scale: 1 },
+    { from: .25, scale: 1.06 },
+    { from: .45, scale: 1.11 },
+    { from: .65, scale: 1.16 }
+  ];
 
   var path = location.pathname.replace(/index\.html$/, '');
   if (/\/(diagnosis|request)\/?$/.test(path)) return;
@@ -58,10 +67,31 @@
     return bar;
   }
 
+  function readProgress() {
+    var doc = document.documentElement;
+    var scrollable = doc.scrollHeight - window.innerHeight;
+    if (scrollable <= 0) return 0;
+    var ratio = window.scrollY / scrollable;
+    return ratio < 0 ? 0 : ratio > 1 ? 1 : ratio;
+  }
+
   function init() {
     var bar = build();
     var footer = document.querySelector('footer');
     var footerVisible = false;
+    var growStep = -1;
+
+    function grow() {
+      var progress = readProgress();
+      var next = 0;
+      for (var i = GROW_STEPS.length - 1; i > 0; i--) {
+        if (progress >= GROW_STEPS[i].from) { next = i; break; }
+      }
+      if (next === growStep) return;
+      growStep = next;
+      bar.style.setProperty('--y-float-scale', String(GROW_STEPS[next].scale));
+      bar.setAttribute('data-grow', String(next));
+    }
 
     if (footer && 'IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) {
@@ -72,6 +102,7 @@
 
     function sync() {
       var show = window.scrollY > SHOW_AFTER && !footerVisible;
+      grow();
       bar.classList.toggle('is-visible', show);
     }
 
@@ -81,6 +112,8 @@
       ticking = true;
       requestAnimationFrame(function () { sync(); ticking = false; });
     }, { passive: true });
+
+    window.addEventListener('resize', sync, { passive: true });
 
     sync();
   }
