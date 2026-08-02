@@ -1,6 +1,6 @@
 /* フローティングバナー：無料診断 + 無料相談
    - ヒーローを読み終えたあたり（600px スクロール）で出現
-   - 読み進めるほど段階的に少しずつ大きくなり、下へ行くほど目立つ
+   - スクロールするたびに一瞬だけ大きくなって元に戻る（脈打って気づかせる）
    - フッターに重なる位置まで来たら退避
    - 診断ページ・問い合わせページ自身には出さない
    - 閉じたらそのセッション中は再表示しない */
@@ -10,13 +10,8 @@
   var DISMISS_KEY = 'yournist:float-dismissed';
   var SHOW_AFTER = 600;
 
-  /* 読了率に応じた拡大段階。連続変化だと変化に気づかないので段階的に上げる */
-  var GROW_STEPS = [
-    { from: 0,   scale: 1 },
-    { from: .25, scale: 1.06 },
-    { from: .45, scale: 1.11 },
-    { from: .65, scale: 1.16 }
-  ];
+  var PULSE_HOLD = 240;      // 大きいまま保つ時間(ms)
+  var PULSE_INTERVAL = 900;  // 次に反応するまでの間隔(ms)。長スクロール中も一定リズムで脈打つ
 
   var path = location.pathname.replace(/index\.html$/, '');
   if (/\/(diagnosis|request)\/?$/.test(path)) return;
@@ -67,30 +62,30 @@
     return bar;
   }
 
-  function readProgress() {
-    var doc = document.documentElement;
-    var scrollable = doc.scrollHeight - window.innerHeight;
-    if (scrollable <= 0) return 0;
-    var ratio = window.scrollY / scrollable;
-    return ratio < 0 ? 0 : ratio > 1 ? 1 : ratio;
+  function prefersReducedMotion() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   }
 
   function init() {
     var bar = build();
     var footer = document.querySelector('footer');
     var footerVisible = false;
-    var growStep = -1;
+    var lastPulse = 0;
+    var pulseTimer = null;
 
-    function grow() {
-      var progress = readProgress();
-      var next = 0;
-      for (var i = GROW_STEPS.length - 1; i > 0; i--) {
-        if (progress >= GROW_STEPS[i].from) { next = i; break; }
-      }
-      if (next === growStep) return;
-      growStep = next;
-      bar.style.setProperty('--y-float-scale', String(GROW_STEPS[next].scale));
-      bar.setAttribute('data-grow', String(next));
+    /* スクロールのたびに一瞬ふくらませて戻す。
+       連続スクロール中に張り付いたままにならないよう、間隔を空けて繰り返す */
+    function pulse() {
+      if (!bar.classList.contains('is-visible')) return;
+      if (prefersReducedMotion()) return;
+
+      var now = Date.now();
+      if (now - lastPulse < PULSE_INTERVAL) return;
+      lastPulse = now;
+
+      bar.classList.add('is-pulse');
+      clearTimeout(pulseTimer);
+      pulseTimer = setTimeout(function () { bar.classList.remove('is-pulse'); }, PULSE_HOLD);
     }
 
     if (footer && 'IntersectionObserver' in window) {
@@ -102,7 +97,10 @@
 
     function sync() {
       var show = window.scrollY > SHOW_AFTER && !footerVisible;
-      grow();
+      if (!show) {
+        clearTimeout(pulseTimer);
+        bar.classList.remove('is-pulse');
+      }
       bar.classList.toggle('is-visible', show);
     }
 
@@ -110,10 +108,12 @@
     window.addEventListener('scroll', function () {
       if (ticking) return;
       ticking = true;
-      requestAnimationFrame(function () { sync(); ticking = false; });
+      requestAnimationFrame(function () {
+        sync();
+        pulse();
+        ticking = false;
+      });
     }, { passive: true });
-
-    window.addEventListener('resize', sync, { passive: true });
 
     sync();
   }

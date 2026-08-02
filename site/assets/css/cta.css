@@ -56,7 +56,7 @@
 
 /* --- フローティングバナー --- */
 .y-float{
-  /* スクロールが深くなるほど JS が段階的に上げる（1 → 1.16） */
+  /* スクロールのたびに JS が一時的に上げ、すぐ 1 に戻す（脈打つ動き） */
   --y-float-scale:1;
   position:fixed;
   z-index:80;
@@ -75,12 +75,18 @@
   transform-origin:100% 100%;
   transform:translateY(16px) scale(var(--y-float-scale));
   pointer-events:none;
-  transition:opacity .28s ease,transform .34s cubic-bezier(.22,.61,.36,1),box-shadow .34s ease;
+  /* 戻りは行きより緩くして、膨らんでから落ち着く感じにする */
+  transition:opacity .28s ease,transform .32s cubic-bezier(.33,1,.68,1),box-shadow .32s ease;
 }
 .y-float.is-visible{opacity:1;transform:scale(var(--y-float-scale));pointer-events:auto}
-/* 大きくなるほど影も強めて、前に出てくる印象にする */
-.y-float[data-grow="2"]{box-shadow:0 22px 58px rgba(4,14,28,.5)}
-.y-float[data-grow="3"]{box-shadow:0 26px 66px rgba(4,14,28,.58);border-color:rgba(118,210,255,.72)}
+
+/* スクロール時の一時的な拡大。膨らむ瞬間だけ速い曲線にする */
+.y-float.is-pulse{
+  --y-float-scale:1.09;
+  box-shadow:0 26px 66px rgba(4,14,28,.58);
+  border-color:rgba(118,210,255,.75);
+  transition:opacity .28s ease,transform .17s cubic-bezier(.34,1.4,.64,1),box-shadow .17s ease;
+}
 
 .y-float__link{
   display:flex;
@@ -131,7 +137,7 @@
 .y-float__close:focus-visible{outline:3px solid #76d2ff;outline-offset:3px}
 
 @media(max-width:720px){
-  /* 横幅いっぱいのバーなので拡大はさせず、上下のスライドだけにする */
+  /* 横幅いっぱいのバーを拡大すると画面外へはみ出すので、SPでは脈打たせない */
   .y-float{
     --y-float-scale:1;
     right:0;
@@ -145,6 +151,7 @@
     transform:translateY(100%);
   }
   .y-float.is-visible{transform:translateY(0)}
+  .y-float.is-pulse{box-shadow:0 18px 50px rgba(4,14,28,.42);border-color:rgba(118,210,255,.42)}
   .y-float__link{min-width:0;flex:1;align-items:center;padding:12px 8px;text-align:center}
   .y-float__link small{display:none}
   .y-float__link strong{font-size:.88rem}
