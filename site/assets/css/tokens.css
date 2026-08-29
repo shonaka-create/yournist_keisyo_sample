@@ -1,11 +1,11 @@
 /* =====================================================================
    Design Tokens (site copy of /design/tokens.css)
-   - Typography / spacing / rules : akariinc.co.jp
-   - Blue palette                 : kpmg.com/jp
+   - Typography / spacing / rules : brand baseline
+   - Blue palette                 : brand blue
    ===================================================================== */
 
 :root {
-  /* ---------- Color : KPMG blue palette ---------- */
+  /* ---------- Color : brand blue palette ---------- */
   --color-primary:        #1e49e2;
   --color-primary-deep:   #00338d;
   --color-ink:            #0c233c;

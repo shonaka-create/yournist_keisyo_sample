@@ -1553,3 +1553,8 @@ html{scroll-behavior:smooth;overflow-x:hidden}.business-page{--ink:#071b34;--blu
 .business-page--staffing .b-outcome-main{
   background:linear-gradient(90deg,rgba(5,24,44,.94),rgba(5,24,44,.78)),url("../img/staffing-hero.webp") center/cover no-repeat;
 }
+
+/* WHO SUPPORTS YOU: 3枚組のカード（b-sectors は既定2列のため3列指定を足す） */
+.b-sectors--three{grid-template-columns:repeat(3,1fr)}
+@media(max-width:980px){.b-sectors--three{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.b-sectors--three{grid-template-columns:1fr}}
