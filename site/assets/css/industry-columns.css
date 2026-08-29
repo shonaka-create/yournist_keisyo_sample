@@ -115,3 +115,35 @@ h1,h2,h3,h4,p,li,a{word-break:normal;overflow-wrap:break-word}
   .ic-sector__media{height:240px}
   .ic-sector__body{padding:28px}
 }
+
+/* 業界コラム → 事業LPへの導線をボタン化（リンクだと気づける形に） */
+.ic-back{
+  display:inline-flex;
+  min-height:56px;
+  align-items:center;
+  justify-content:space-between;
+  gap:26px;
+  margin-top:30px;
+  padding:0 24px;
+  background:#1e49e2;
+  color:#fff;
+  font-size:.95rem;
+  font-weight:700;
+  letter-spacing:-.01em;
+  box-shadow:0 10px 26px rgba(30,73,226,.22);
+  transition:background-color .25s,transform .25s,box-shadow .25s;
+}
+.ic-back:hover{
+  background:#00338d;
+  color:#fff;
+  transform:translateY(-3px);
+  box-shadow:0 18px 40px rgba(30,73,226,.32);
+}
+.ic-back:focus-visible{outline:2px solid #00338d;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.ic-back:hover{transform:none}}
+@media(max-width:680px){
+  .ic-back{width:100%;min-height:52px;font-size:.9rem}
+}
+.ic-back>span{font-family:"DM Sans",sans-serif;font-size:1.15rem;line-height:1;transition:transform .25s}
+.ic-back:hover>span{transform:translate(3px,-3px)}
+@media(prefers-reduced-motion:reduce){.ic-back:hover>span{transform:none}}

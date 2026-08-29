@@ -712,3 +712,74 @@
   .home-refresh .r-business-tab>span{font-size:.56rem;letter-spacing:.14em}
   .home-refresh .r-business-tab>b{font-size:.96rem}
 }
+
+/* SOLUTION FIELDS：業種カードのCTAを実ボタン化（リンクだと気づける形に） */
+.home-refresh .r-business-card__focus{margin-bottom:30px}
+.home-refresh .r-business-card strong.r-business-card__cta{
+  display:inline-flex;
+  width:max-content;
+  max-width:100%;
+  min-height:58px;
+  align-items:center;
+  justify-content:space-between;
+  gap:28px;
+  align-self:flex-start;
+  margin-top:auto;
+  padding:0 24px;
+  border:0;
+  border-top:0;
+  padding-top:0;
+  background:#1e49e2;
+  color:#fff;
+  font-size:.95rem;
+  font-weight:700;
+  letter-spacing:-.01em;
+  line-height:1.4;
+  box-shadow:0 10px 26px rgba(30,73,226,.22);
+  transition:background-color .25s,transform .25s,box-shadow .25s;
+}
+.home-refresh .r-business-card__cta>span{
+  font-family:"DM Sans",sans-serif;
+  font-size:1.15rem;
+  line-height:1;
+  transition:transform .25s;
+}
+.home-refresh .r-business-card:hover .r-business-card__cta{
+  background:#00338d;
+  transform:translateY(-3px);
+  box-shadow:0 18px 40px rgba(30,73,226,.32);
+}
+.home-refresh .r-business-card:hover .r-business-card__cta>span{transform:translate(3px,-3px)}
+.home-refresh .r-business-card:focus-visible .r-business-card__cta{background:#00338d}
+@media(prefers-reduced-motion:reduce){
+  .home-refresh .r-business-card:hover .r-business-card__cta{transform:none}
+  .home-refresh .r-business-card:hover .r-business-card__cta>span{transform:none}
+}
+@media(max-width:680px){
+  .home-refresh .r-business-card__focus{margin-bottom:24px}
+  .home-refresh .r-business-card strong.r-business-card__cta{
+    width:100%;
+    min-height:54px;
+    font-size:.9rem;
+  }
+}
+
+/* 提供サービス→業界別事業の導線もボタン表記に揃える */
+.home-refresh .r-service-link a{
+  display:inline-flex;
+  min-height:52px;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding:0 22px;
+  background:#1e49e2;
+  color:#fff;
+  white-space:nowrap;
+  transition:background-color .25s,transform .25s;
+}
+.home-refresh .r-service-link a>span{color:#fff;font-size:1.1rem;transition:transform .25s}
+.home-refresh .r-service-link a:hover{background:#3a63ff;transform:translateY(-2px)}
+.home-refresh .r-service-link a:hover>span{transform:translateY(3px)}
+@media(max-width:680px){
+  .home-refresh .r-service-link a{width:100%;margin-top:18px}
+}
