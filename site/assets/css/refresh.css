@@ -712,38 +712,3 @@
   .home-refresh .r-business-tab>span{font-size:.56rem;letter-spacing:.14em}
   .home-refresh .r-business-tab>b{font-size:.96rem}
 }
-
-/* WHO SUPPORTS YOU：カード下のCTA導線 */
-.home-refresh .r-team-actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:14px 32px;
-  margin-top:34px;
-  padding-top:26px;
-  border-top:1px solid rgba(12,35,60,.14);
-}
-.home-refresh .r-team-actions a{
-  position:relative;
-  color:#0c233c;
-  font-size:.95rem;
-  font-weight:700;
-  letter-spacing:-.01em;
-  transition:color .25s;
-}
-.home-refresh .r-team-actions a::after{
-  display:block;
-  width:100%;
-  height:1px;
-  margin-top:7px;
-  background:#1e49e2;
-  content:"";
-  transform:scaleX(0);
-  transform-origin:left center;
-  transition:transform .3s cubic-bezier(.2,.7,.2,1);
-}
-.home-refresh .r-team-actions a:hover{color:#1e49e2}
-.home-refresh .r-team-actions a:hover::after{transform:scaleX(1)}
-@media(max-width:680px){
-  .home-refresh .r-team-actions{gap:12px;margin-top:26px;padding-top:22px;flex-direction:column}
-  .home-refresh .r-team-actions a{font-size:.92rem}
-}

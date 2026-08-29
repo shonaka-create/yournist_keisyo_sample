@@ -108,9 +108,9 @@ h1,h2,h3,h4,p,li,a{word-break:normal;overflow-wrap:break-word}
 .ic-breadcrumb-bar li+li::before{margin-right:8px;content:"/";color:var(--blue)}
 .ic-breadcrumb-bar a{color:var(--blue)}
 
-/* Three-sector hub: Wholesale, manufacturing and tourism. */
+/* Four-sector hub: wholesale, manufacturing, tourism and recruitment. */
 @media(min-width:901px){
-  .ic-sector-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ic-sector-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .ic-sector{min-height:600px;grid-template-rows:240px 1fr}
   .ic-sector__media{height:240px}
   .ic-sector__body{padding:28px}
