@@ -158,26 +158,38 @@
 <section class="r-industries" id="business">
   <div class="r-shell">
     <div class="r-heading"><div><p class="r-section-no">SOLUTION FIELDS</p><h2><span class="wb">共通の課題を、</span><br><span class="wb">業界ごとの</span><span class="wb">解決策へ。</span></h2></div><p>デジタル事業承継という考え方は共通でも、残すべき判断や業務資産は業界ごとに異なります。現場の言葉と商習慣まで理解した、業界別の事業として具体化します。</p></div>
-    <div class="r-business-list">
+    <div class="r-business-tabs" role="tablist" aria-label="業界を選ぶ">
+      <button class="r-business-tab is-active" type="button" role="tab" id="bizTab-wholesale" aria-controls="bizPanel-wholesale" aria-selected="true" tabindex="0"><span>WHOLESALE</span><b>卸売業</b></button>
+      <button class="r-business-tab" type="button" role="tab" id="bizTab-manufacturing" aria-controls="bizPanel-manufacturing" aria-selected="false" tabindex="-1"><span>MANUFACTURING</span><b>製造業</b></button>
+      <button class="r-business-tab" type="button" role="tab" id="bizTab-tourism" aria-controls="bizPanel-tourism" aria-selected="false" tabindex="-1"><span>TOURISM</span><b>観光業</b></button>
+      <button class="r-business-tab" type="button" role="tab" id="bizTab-staffing" aria-controls="bizPanel-staffing" aria-selected="false" tabindex="-1"><span>RECRUITMENT</span><b>人材紹介業</b></button>
+    </div>
+    <div class="r-business-list" data-business-tabs>
+      <div class="r-business-panel" id="bizPanel-wholesale" role="tabpanel" aria-labelledby="bizTab-wholesale">
       <a class="r-business-card" href="business/wholesale/index.html">
-        <div class="r-business-card__copy"><span>WHOLESALE</span><h3>卸売業の<br>デジタル事業承継</h3><p>受発注・価格・在庫・配送・問い合わせにある属人判断を、誰でも検証し引き継げる仕組みへ。</p><ul><li>得意先別価格と請求</li><li>発注・在庫・配送判断</li><li>問い合わせ・業務承継</li></ul><strong>卸売業向けの解決策を見る ↗</strong></div>
+        <div class="r-business-card__copy"><span>WHOLESALE</span><h3>卸売業の<br>デジタル事業承継</h3><p>受発注・価格・在庫・配送・問い合わせにある属人判断を、誰でも検証し引き継げる仕組みへ。</p><div class="r-business-card__focus"><span>FOCUS AREAS</span><ul><li>得意先別価格と請求</li><li>発注・在庫・配送判断</li><li>問い合わせ・業務承継</li></ul></div><strong>卸売業向けの解決策を見る ↗</strong></div>
         <span class="r-business-card__media"><img src="assets/img/hero-wholesale.webp" alt="卸売会社で業務を引き継ぐ担当者" loading="lazy"></span><em>初期は医薬品卸から提供開始</em>
       </a>
-      <a class="r-business-card r-business-card--reverse" href="business/manufacturing/index.html">
-        <div class="r-business-card__copy"><span>MANUFACTURING</span><h3>製造業の<br>デジタル事業承継</h3><p>見積・工程・品質・保全にある熟練判断を、次世代が再現・改善できる技術資産へ。</p><ul><li>見積・原価判断</li><li>工程条件・品質対応</li><li>設備保全・技術承継</li></ul><strong>製造業向けの解決策を見る ↗</strong></div>
+      </div>
+      <div class="r-business-panel" id="bizPanel-manufacturing" role="tabpanel" aria-labelledby="bizTab-manufacturing" hidden>
+      <a class="r-business-card" href="business/manufacturing/index.html">
+        <div class="r-business-card__copy"><span>MANUFACTURING</span><h3>製造業の<br>デジタル事業承継</h3><p>見積・工程・品質・保全にある熟練判断を、次世代が再現・改善できる技術資産へ。</p><div class="r-business-card__focus"><span>FOCUS AREAS</span><ul><li>見積・原価判断</li><li>工程条件・品質対応</li><li>設備保全・技術承継</li></ul></div><strong>製造業向けの解決策を見る ↗</strong></div>
         <span class="r-business-card__media"><img src="assets/img/manufacturing.webp" alt="製造現場で技術を引き継ぐエンジニア" loading="lazy"></span><em>個別相談を受付中</em>
       </a>
+      </div>
+      <div class="r-business-panel" id="bizPanel-tourism" role="tabpanel" aria-labelledby="bizTab-tourism" hidden>
       <a class="r-business-card" href="business/tourism/index.html">
-        <div class="r-business-card__copy"><span>TOURISM</span><h3>観光業の<br>デジタル事業承継</h3><p>予約・手配・料金・多言語対応にある担当者依存を減らし、繁忙期や人の入れ替わりにも強い運営へ。</p><ul><li>旅行代理店の見積・手配・旅程変更</li><li>ホテルの予約・在庫・料金管理</li><li>多言語接客・夜間対応・業務承継</li></ul><strong>観光業向けの解決策を見る ↗</strong></div>
+        <div class="r-business-card__copy"><span>TOURISM</span><h3>観光業の<br>デジタル事業承継</h3><p>予約・手配・料金・多言語対応にある担当者依存を減らし、繁忙期や人の入れ替わりにも強い運営へ。</p><div class="r-business-card__focus"><span>FOCUS AREAS</span><ul><li>旅行代理店の見積・手配・旅程変更</li><li>ホテルの予約・在庫・料金管理</li><li>多言語接客・夜間対応・業務承継</li></ul></div><strong>観光業向けの解決策を見る ↗</strong></div>
         <span class="r-business-card__media"><img src="assets/img/tourism-hero.webp" alt="訪日旅行者を迎える旅行会社とホテルのスタッフ" loading="lazy"></span><em>旅行代理店・ホテルの相談を受付中</em>
       </a>
+      </div>
+      <div class="r-business-panel" id="bizPanel-staffing" role="tabpanel" aria-labelledby="bizTab-staffing" hidden>
+      <a class="r-business-card" href="business/staffing/index.html">
+        <div class="r-business-card__copy"><span>RECRUITMENT</span><h3>人材紹介業の<br>デジタル事業承継</h3><p>求人開拓・面談・推薦・成約後の請求にある担当者ごとの判断を、会社に残る基準と記録へ。</p><div class="r-business-card__focus"><span>FOCUS AREAS</span><ul><li>求人開拓・求職者対応の判断</li><li>マッチング・推薦の基準</li><li>手数料・返金・記録の承継</li></ul></div><strong>人材紹介業向けの解決策を見る ↗</strong></div>
+        <span class="r-business-card__media"><img src="assets/img/staffing-hero.webp" alt="人材紹介会社で求職者対応を引き継ぐキャリアアドバイザー" loading="lazy"></span><em>人材紹介会社の個別相談を受付中</em>
+      </a>
+      </div>
     </div>
-  </div>
-</section>
-
-<section class="r-assurance">
-  <div class="r-shell"><div class="r-heading"><div><p class="r-section-no">OUR POLICY</p><h2><span class="wb">やらないことを、</span><br><span class="wb">先に決めています。</span></h2></div><p>支援の質は、何をするかより、何をしないと決めているかで決まります。私たちが着手前に必ずお伝えしている3つの方針です。</p></div>
-    <div class="r-assurance-grid"><article><span>POLICY 01</span><h3><span class="wb">作り直しを</span><span class="wb">前提にしない</span></h3><p>動いているExcelや既存システムは、置き換える理由を数字と手順で説明できないかぎり残します。刷新ありきの提案はせず、廃止・置換・延命・再構築の判断材料を先に揃えます。</p></article><article><span>POLICY 02</span><h3><span class="wb">読ませる資料は</span><span class="wb">納品しない</span></h3><p>資料が増えても引き継ぎは進みません。次の担当者がその場で使える台帳・判断ルール・テストケースの形で残し、別の人が実際に同じ結果を再現できるところまで確認します。</p></article><article><span>POLICY 03</span><h3><span class="wb">記録を</span><span class="wb">人の評価に使わない</span></h3><p>誰が何を抱えているかを可視化すると、現場は身構えて本当のことを話さなくなります。記録は業務の状態を示すためだけに使い、人事評価や責任の追及には使いません。</p></article></div>
   </div>
 </section>
 
@@ -202,6 +214,7 @@ menu&&menu.addEventListener('click',()=>{const open=nav.classList.toggle('is-ope
 nav&&nav.addEventListener('click',e=>{if(e.target.closest('a'))nav.classList.remove('is-open')});
 
 </script>
+<script src="assets/js/business-tabs.js?v=20260830" defer></script>
 <script src="assets/js/motion.js?v=20260730" defer></script>
 
 <script src="assets/js/floating-cta.js?v=20260730" defer></script>

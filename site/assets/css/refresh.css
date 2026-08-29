@@ -566,3 +566,149 @@
   .home-refresh .r-mission-reason{padding-top:26px}
   .home-refresh .r-mission-reason p{font-size:.98rem;line-height:1.95}
 }
+
+/* SOLUTION FIELDS：業種カード内「対応領域」ブロック（旧＋区切りのタグ列を置き換え） */
+.home-refresh .r-business-card__focus{
+  margin-top:28px;
+  padding-top:20px;
+  border-top:1px solid rgba(30,73,226,.2);
+}
+.home-refresh .r-business-card__focus>span{
+  display:block;
+  font-family:"DM Sans",sans-serif;
+  font-size:.66rem;
+  font-weight:700;
+  letter-spacing:.2em;
+  color:rgba(12,35,60,.45);
+}
+.home-refresh .r-business-card__focus ul{
+  display:block;
+  max-width:520px;
+  margin-top:12px;
+  counter-reset:focusitem;
+}
+.home-refresh .r-business-card__focus li{
+  display:grid;
+  align-items:center;
+  grid-template-columns:42px minmax(0,1fr);
+  column-gap:14px;
+  padding:12px 0;
+  border-bottom:1px solid rgba(12,35,60,.1);
+  font-size:.95rem;
+  font-weight:600;
+  line-height:1.55;
+  letter-spacing:-.01em;
+  counter-increment:focusitem;
+}
+.home-refresh .r-business-card__focus li:last-child{border-bottom:0}
+.home-refresh .r-business-card__focus li::before{
+  display:flex;
+  height:100%;
+  min-height:22px;
+  align-items:center;
+  justify-content:flex-start;
+  margin:0;
+  padding-right:16px;
+  border-right:1px solid rgba(30,73,226,.28);
+  color:#1e49e2;
+  content:"0" counter(focusitem);
+  font-family:"DM Sans",sans-serif;
+  font-size:.74rem;
+  font-weight:700;
+  letter-spacing:.04em;
+  transition:color .3s,border-color .3s;
+}
+.home-refresh .r-business-card:hover .r-business-card__focus li::before{
+  color:#00338d;
+  border-right-color:rgba(30,73,226,.55);
+}
+@media(max-width:980px){
+  .home-refresh .r-business-card__focus ul{max-width:none}
+}
+@media(max-width:680px){
+  .home-refresh .r-business-card__focus{margin-top:24px;padding-top:18px}
+  .home-refresh .r-business-card__focus li{grid-template-columns:36px minmax(0,1fr);column-gap:11px;padding:11px 0;font-size:.88rem}
+  .home-refresh .r-business-card__focus li::before{padding-right:12px;font-size:.68rem}
+}
+
+/* SOLUTION FIELDS：業界タブ（選んだ業界のカードだけを表示） */
+.home-refresh .r-business-tabs{
+  display:flex;
+  margin-bottom:20px;
+  border-bottom:1px solid rgba(12,35,60,.14);
+  overflow-x:auto;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+.home-refresh .r-business-tabs::-webkit-scrollbar{display:none}
+.home-refresh .r-business-tab{
+  position:relative;
+  display:flex;
+  flex:1 1 0;
+  min-width:158px;
+  flex-direction:column;
+  gap:9px;
+  padding:18px 22px 19px;
+  border:0;
+  background:transparent;
+  color:rgba(12,35,60,.52);
+  cursor:pointer;
+  font-family:inherit;
+  text-align:left;
+  transition:color .25s,background-color .25s;
+}
+.home-refresh .r-business-tab>span{
+  font-family:"DM Sans",sans-serif;
+  font-size:.62rem;
+  font-weight:700;
+  letter-spacing:.18em;
+  opacity:.75;
+}
+.home-refresh .r-business-tab>b{
+  font-size:1.06rem;
+  font-weight:700;
+  letter-spacing:-.02em;
+  line-height:1.2;
+}
+.home-refresh .r-business-tab::after{
+  position:absolute;
+  bottom:-1px;
+  left:0;
+  width:100%;
+  height:2px;
+  background:#1e49e2;
+  content:"";
+  transform:scaleX(0);
+  transform-origin:left center;
+  transition:transform .3s cubic-bezier(.2,.7,.2,1);
+}
+.home-refresh .r-business-tab:hover{color:#0c233c;background:rgba(30,73,226,.04)}
+.home-refresh .r-business-tab:focus-visible{outline:2px solid #1e49e2;outline-offset:-3px}
+.home-refresh .r-business-tab.is-active{color:#0c233c;background:rgba(30,73,226,.06)}
+.home-refresh .r-business-tab.is-active>span{color:#1e49e2;opacity:1}
+.home-refresh .r-business-tab.is-active::after{transform:scaleX(1)}
+.home-refresh .r-business-panel[hidden]{display:none}
+.home-refresh .r-business-panel:not([hidden]){animation:bizPanelIn .38s cubic-bezier(.2,.7,.2,1) both}
+@keyframes bizPanelIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){
+  .home-refresh .r-business-panel:not([hidden]){animation:none}
+  .home-refresh .r-business-tab::after{transition:none}
+}
+@media(max-width:680px){
+  .home-refresh .r-business-tabs{
+    display:grid;
+    margin-bottom:16px;
+    grid-template-columns:1fr 1fr;
+    border-bottom:0;
+    overflow:visible;
+  }
+  .home-refresh .r-business-tab{
+    min-width:0;
+    gap:6px;
+    padding:14px 14px 15px;
+    border-bottom:1px solid rgba(12,35,60,.14);
+  }
+  .home-refresh .r-business-tab:nth-child(odd){border-right:1px solid rgba(12,35,60,.1)}
+  .home-refresh .r-business-tab>span{font-size:.56rem;letter-spacing:.14em}
+  .home-refresh .r-business-tab>b{font-size:.96rem}
+}
