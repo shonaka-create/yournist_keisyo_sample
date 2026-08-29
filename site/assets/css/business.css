@@ -1539,7 +1539,7 @@ html{scroll-behavior:smooth;overflow-x:hidden}.business-page{--ink:#071b34;--blu
   color:#fff;
 }
 .business-page--staffing .b-intervention article:nth-child(1)::before{
-  background-image:url("../img/staffing-hero.webp");
+  background-image:url("../img/staffing-office.webp");
 }
 .business-page--staffing .b-intervention article:nth-child(2)::before{
   background-image:url("../img/process-workshop.webp");
@@ -1548,10 +1548,10 @@ html{scroll-behavior:smooth;overflow-x:hidden}.business-page{--ink:#071b34;--blu
   background-image:url("../img/hero-handover.webp");
 }
 .business-page--staffing .b-intervention article:nth-child(4)::before{
-  background-image:url("../img/staffing-hero.webp");
+  background-image:url("../img/staffing-office.webp");
 }
 .business-page--staffing .b-outcome-main{
-  background:linear-gradient(90deg,rgba(5,24,44,.94),rgba(5,24,44,.78)),url("../img/staffing-hero.webp") center/cover no-repeat;
+  background:linear-gradient(90deg,rgba(5,24,44,.94),rgba(5,24,44,.78)),url("../img/staffing-office.webp") center/cover no-repeat;
 }
 
 /* WHO SUPPORTS YOU: 3枚組のカード（b-sectors は既定2列のため3列指定を足す） */
