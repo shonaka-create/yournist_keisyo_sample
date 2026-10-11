@@ -783,3 +783,69 @@
 @media(max-width:680px){
   .home-refresh .r-service-link a{width:100%;margin-top:18px}
 }
+
+/* ------------------------------------------------------------------
+   ヒーロー：AI経営ソリューションであることを冒頭で伝える
+   見出しの上のバッジと、リード文の下の3つの提供内容タグ。
+   ------------------------------------------------------------------ */
+.home-refresh .r-hero__eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:14px;
+  padding:7px 20px 7px 7px;
+  font-size:clamp(.88rem,1.1vw,1.02rem);
+  font-weight:700;
+  letter-spacing:.06em;
+  color:#fff;
+  background:rgba(7,27,52,.5);
+  border:1px solid rgba(157,226,255,.5);
+  border-radius:999px;
+  backdrop-filter:blur(6px);
+}
+.home-refresh .r-hero__eyebrow span{
+  padding:7px 14px;
+  font-family:"DM Sans",sans-serif;
+  font-size:.7rem;
+  letter-spacing:.14em;
+  color:#fff;
+  background:#1e49e2;
+  border-radius:999px;
+}
+.home-refresh .r-hero h1{margin-top:26px}
+.home-refresh .r-hero__chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:28px 0 0;
+  padding:0;
+  list-style:none;
+}
+.home-refresh .r-hero__chips li{
+  padding:8px 16px;
+  font-size:.92rem;
+  font-weight:600;
+  color:#fff;
+  background:rgba(7,27,52,.45);
+  border:1px solid rgba(157,226,255,.5);
+}
+.home-refresh .r-hero__chips li::before{
+  margin-right:8px;
+  content:"✓";
+  color:#9de2ff;
+}
+.home-refresh .r-hero__lead{margin-top:30px}
+.home-refresh .r-hero__actions{margin-top:36px}
+@media(max-width:680px){
+  .home-refresh .r-hero__eyebrow{gap:10px;padding-right:14px;font-size:.8rem;letter-spacing:.02em}
+  .home-refresh .r-hero__eyebrow span{padding:6px 10px;font-size:.62rem}
+  .home-refresh .r-hero h1{margin-top:20px}
+  .home-refresh .r-hero__lead{margin-top:22px}
+  .home-refresh .r-hero__chips{margin-top:22px}
+  .home-refresh .r-hero__chips li{padding:7px 12px;font-size:.82rem}
+  .home-refresh .r-hero__actions{margin-top:24px}
+}
+
+/* ヒーロー画像：サービス画面が右側にあるため、スマホでは右寄りを見せる */
+@media(max-width:980px){
+  .r-hero__image{object-position:72% 50%}
+}
