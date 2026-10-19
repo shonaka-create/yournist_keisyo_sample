@@ -4,7 +4,7 @@ from urllib.parse import urlsplit
 import re
 
 ROOT=Path(__file__).resolve().parents[1]/'site'
-BASE='https://yournist.vercel.app'
+BASE='https://yournist-keisyo-sample.vercel.app'
 
 class Scan(HTMLParser):
     def __init__(self): super().__init__(); self.links=[]; self.ids=set(); self.h1=0
